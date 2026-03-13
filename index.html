@@ -124,6 +124,9 @@
         <li><a href="#generator" class="nav-link generator-link">
           <span class="nav-icon">⚡</span>Генератор программ
         </a></li>
+        <li><a href="#cutting-calc" class="nav-link calc-link">
+          <span class="nav-icon">⚙️</span>Режимы резания
+        </a></li>
         <li><a href="#checklist" class="nav-link checklist-link">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           Чеклист запуска
@@ -1024,209 +1027,6 @@ END PGM THREAD MM</code></pre>
         </div>
       </section>
 
-      <!-- ===== ЧЕКЛИСТ ЗАПУСКА ===== -->
-      <section id="checklist" class="content-section">
-        <h2 class="section-title checklist-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-          Что проверить перед первым запуском
-        </h2>
-
-        <div class="checklist-intro">
-          <p>Тапни — отмечается. Все шаги должны быть зелёными перед <strong>CYCLE START</strong>. Грабли помечены <span class="grab-badge">💀 грабли</span> — это реально случается и стоит дорого.</p>
-          <button class="reset-checklist-btn" id="resetChecklist">Сбросить все</button>
-        </div>
-
-        <!-- ─── ЭТАП 1: ДО ВКЛЮЧЕНИЯ ПРОГРАММЫ ─── -->
-        <div class="checklist-phase">
-          <div class="checklist-phase-header phase-1">
-            <span class="phase-num">01</span>
-            <span class="phase-title">Станок и деталь</span>
-            <span class="phase-sub">до открытия программы</span>
-          </div>
-          <ul class="checklist-list" role="list">
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Референс (home) выполнен после включения — все оси в нуле станка</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Деталь зажата надёжно, усилие не деформирует заготовку (тонкостенки — особо)</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box grab-item" data-tip="Щупы, прихваты, болты внутри зоны — причина №1 краша">
-                <span class="grab-badge">💀 грабли</span> Зона обработки чистая: убраны щупы, прихваты, инструменты измерения
-              </span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Дверь станка закрыта, блокировки сработали (индикатор на пульте)</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Давление воздуха / гидравлики зажима в норме (манометр)</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- ─── ЭТАП 2: ИНСТРУМЕНТ ─── -->
-        <div class="checklist-phase">
-          <div class="checklist-phase-header phase-2">
-            <span class="phase-num">02</span>
-            <span class="phase-title">Инструмент</span>
-            <span class="phase-sub">коррекции и вылет</span>
-          </div>
-          <ul class="checklist-list" role="list">
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Физически установленный инструмент совпадает с номером в программе (T1 = фреза Ø10, не сверло)</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> Длина инструмента обмерена и внесена в таблицу: H-offset (Fanuc), длина в таблице инструментов (Siemens), TOOL.T (Heidenhain)
-              </span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> <strong>Fanuc:</strong> G43 H[номер] стоит <em>до</em> первого движения по Z — без него коррекция длины не активна
-              </span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Вылет инструмента достаточен для глубины + зазора, хвостовик не упрётся в деталь</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Инструмент надёжно зажат в патроне / оправке (момент затяжки)</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Диаметр фрезы в таблице соответствует реальному (важно при коррекции радиуса G41/G42)</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- ─── ЭТАП 3: НУЛИ И КООРДИНАТЫ ─── -->
-        <div class="checklist-phase">
-          <div class="checklist-phase-header phase-3">
-            <span class="phase-num">03</span>
-            <span class="phase-title">Нули и координаты</span>
-            <span class="phase-sub">привязка детали</span>
-          </div>
-          <ul class="checklist-list" role="list">
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> Нулевая точка детали привязана верно и записана в нужную ячейку: G54 (Fanuc/Siemens), CYCL DEF 7.1 / preset (Heidenhain)
-              </span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> Z-ноль: поверхность в программе совпадает с реальной точкой привязки — путаница «верх детали / верх тисков» бьёт в стол
-              </span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Зазор R-плоскости (R / Q200) выше всех зажимных элементов и прихватов</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Активная система координат в программе (G54–G59) совпадает с той, куда записан ноль</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> Остаточное смещение предыдущей детали сброшено — G54 не содержит «чужой» ноль от прошлой программы
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- ─── ЭТАП 4: ПРОГРАММА ─── -->
-        <div class="checklist-phase">
-          <div class="checklist-phase-header phase-4">
-            <span class="phase-num">04</span>
-            <span class="phase-title">Программа</span>
-            <span class="phase-sub">синтаксис и логика</span>
-          </div>
-          <ul class="checklist-list" role="list">
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Программа прошла графическое моделирование (симуляция на стойке или в CAM)</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> Первая строка сбрасывает всё: <code>G40 G49 G80</code> (Fanuc), <code>TRAFOOF CYCLE800()</code> (Siemens 5ос.), <code>CYCL DEF 0</code> (Heidenhain) — без этого «хвост» предыдущей программы активен
-              </span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Единицы мм/дюймы: G21 или G20 (Fanuc), DIAMOF/DIAMON совпадает с заготовкой</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> Коррекция радиуса (G41/G42 или RL/RR) выключается (G40/R0) до <em>каждой</em> смены инструмента и в конце программы
-              </span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Все вызовы подпрограмм L / M98 / CALL имеют соответствующие файлы на стойке</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Программа заканчивается M30 (Fanuc/Siemens) или END PGM (Heidenhain)</span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- ─── ЭТАП 5: ПЕРВЫЙ ПРОГОН ─── -->
-        <div class="checklist-phase">
-          <div class="checklist-phase-header phase-5">
-            <span class="phase-num">05</span>
-            <span class="phase-title">Первый прогон</span>
-            <span class="phase-sub">запуск и контроль</span>
-          </div>
-          <ul class="checklist-list" role="list">
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> Override подачи на 5–10%, Override шпинделя снижен — первый проход всегда медленно
-              </span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Первое движение по Z проверено в покадровом режиме (Single Block / Satzweise)</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span>Рука у Feed Hold и аварийного стопа весь первый прогон</span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> СОЖ включена до входа инструмента в металл — сухой вход в жаропрочном / алюминии = наклёп или налипание
-              </span>
-            </li>
-            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-              <span class="check-box"></span>
-              <span class="grab-text">
-                <span class="grab-badge">💀 грабли</span> После первой детали — замер. Коррекция до запуска серии, не после третьей
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="checklist-progress" id="checklistProgress">
-          <div class="progress-bar">
-            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-          </div>
-          <span id="progressLabel">0 / 27 выполнено</span>
-        </div>
-      </section>
 
       <!-- ===== 5-ОСЕВЫЕ ОПЕРАЦИИ ===== -->
       <section id="five-axis" class="content-section">
@@ -1495,6 +1295,274 @@ END PGM TILT5AX MM</code></pre>
             </div>
             <pre id="genOutput" class="gen-output"><code id="genOutputCode">; Заполни параметры слева
 ; и нажми «Сгенерировать код»</code></pre>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ===== ЧЕКЛИСТ ЗАПУСКА ===== -->
+      <section id="checklist" class="content-section">
+        <h2 class="section-title checklist-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Что проверить перед первым запуском
+        </h2>
+
+        <div class="checklist-intro">
+          <p>Тапни — отмечается. Все шаги должны быть зелёными перед <strong>CYCLE START</strong>. Пункты <span class="grab-badge">💀 грабли</span> — это реально случается и стоит дорого.</p>
+          <button class="reset-checklist-btn" id="resetChecklist">Сбросить все</button>
+        </div>
+
+        <!-- 01 -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-1">
+            <span class="phase-num">01</span>
+            <span class="phase-title">Станок и деталь</span>
+            <span class="phase-sub">до открытия программы</span>
+          </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Референс (home) выполнен после включения — все оси в нуле станка</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Деталь зажата надёжно, усилие не деформирует заготовку (тонкостенки — особо)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>Зона обработки чистая: убраны щупы, прихваты, инструменты измерения — причина №1 краша</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Дверь станка закрыта, блокировки сработали (индикатор на пульте)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Давление воздуха / гидравлики зажима в норме (манометр)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 02 -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-2">
+            <span class="phase-num">02</span>
+            <span class="phase-title">Инструмент</span>
+            <span class="phase-sub">коррекции и вылет</span>
+          </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Физически установленный инструмент совпадает с номером в программе (T1 = фреза Ø10, не сверло)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>Длина инструмента обмерена и внесена в таблицу: H-offset (Fanuc), длина в таблице инструментов (Siemens), TOOL.T (Heidenhain)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span><strong>Fanuc:</strong> G43 H[номер] стоит <em>до</em> первого движения по Z — без него коррекция длины не активна</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Вылет инструмента достаточен для глубины + зазора, хвостовик не упрётся в деталь</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Инструмент надёжно зажат в патроне / оправке (момент затяжки)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Диаметр фрезы в таблице соответствует реальному (важно при коррекции радиуса G41/G42)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 03 -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-3">
+            <span class="phase-num">03</span>
+            <span class="phase-title">Нули и координаты</span>
+            <span class="phase-sub">привязка детали</span>
+          </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>Нулевая точка детали привязана верно и записана в нужную ячейку: G54 (Fanuc/Siemens), CYCL DEF 7.1 / preset (Heidenhain)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>Z-ноль: поверхность в программе совпадает с реальной точкой привязки — путаница «верх детали / верх тисков» бьёт в стол</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Зазор R-плоскости (R / Q200) выше всех зажимных элементов и прихватов</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Активная система координат в программе (G54–G59) совпадает с той, куда записан ноль</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>Остаточное смещение предыдущей детали сброшено — G54 не содержит «чужой» ноль от прошлой программы</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 04 -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-4">
+            <span class="phase-num">04</span>
+            <span class="phase-title">Программа</span>
+            <span class="phase-sub">синтаксис и логика</span>
+          </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Программа прошла графическое моделирование (симуляция на стойке или в CAM)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>Первая строка сбрасывает всё: <code>G40 G49 G80</code> (Fanuc), <code>TRAFOOF CYCLE800()</code> (Siemens 5ос.), <code>CYCL DEF 0</code> (Heidenhain) — без этого «хвост» предыдущей программы активен</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Единицы мм/дюймы: G21 или G20 (Fanuc), DIAMOF/DIAMON совпадает с заготовкой</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>Коррекция радиуса (G41/G42 или RL/RR) выключается (G40/R0) до <em>каждой</em> смены инструмента и в конце программы</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Все вызовы подпрограмм L / M98 / CALL имеют соответствующие файлы на стойке</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Программа заканчивается M30 (Fanuc/Siemens) или END PGM (Heidenhain)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 05 -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-5">
+            <span class="phase-num">05</span>
+            <span class="phase-title">Первый прогон</span>
+            <span class="phase-sub">запуск и контроль</span>
+          </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>Override подачи на 5–10%, Override шпинделя снижен — первый проход всегда медленно</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Первое движение по Z проверено в покадровом режиме (Single Block / Satzweise)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Рука у Feed Hold и аварийного стопа весь первый прогон</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>СОЖ включена до входа инструмента в металл — сухой вход в жаропрочном / алюминии = наклёп или налипание</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span><span class="grab-badge">💀 грабли</span>После первой детали — замер. Коррекция до запуска серии, не после третьей</span>
+            </li>
+          </ul>
+        </div>
+
+        <div class="checklist-progress" id="checklistProgress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          </div>
+          <span id="progressLabel">0 / 27 выполнено</span>
+        </div>
+      </section>
+
+      <!-- ===== КАЛЬКУЛЯТОР РЕЖИМОВ ===== -->
+      <section id="cutting-calc" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="13" y2="14"/></svg>
+          Калькулятор режимов резания
+        </h2>
+        <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-6)">Введи параметры инструмента и материала — получи n, Vf, fz. Формулы стандартные: n = Vc·1000 / (π·D), Vf = n·fz·z.</p>
+
+        <div class="calc-layout">
+          <!-- Inputs -->
+          <div class="calc-inputs">
+            <div class="calc-section-label">Инструмент</div>
+            <div class="calc-grid-2">
+              <div class="calc-group">
+                <label class="calc-label" for="cc-diam">Диаметр D (мм)</label>
+                <input class="calc-input" type="number" id="cc-diam" value="10" min="0.1" step="0.1">
+              </div>
+              <div class="calc-group">
+                <label class="calc-label" for="cc-teeth">Число зубьев z</label>
+                <input class="calc-input" type="number" id="cc-teeth" value="4" min="1" step="1">
+              </div>
+            </div>
+
+            <div class="calc-section-label" style="margin-top:16px">Материал и скорость</div>
+            <div class="calc-group">
+              <label class="calc-label" for="cc-material">Материал заготовки</label>
+              <select class="calc-input" id="cc-material">
+                <option value="custom">Ввести Vc вручную</option>
+                <optgroup label="Сталь">
+                  <option value="60">Конструкционная сталь (45, 40Х) — Vc ≈ 60</option>
+                  <option value="40">Нержавейка 304/316 — Vc ≈ 40</option>
+                  <option value="30">Инструментальная сталь (Д2, М2) — Vc ≈ 30</option>
+                </optgroup>
+                <optgroup label="Цветные металлы">
+                  <option value="200">Алюминий (6061, 7075) — Vc ≈ 200</option>
+                  <option value="80">Медь / Латунь — Vc ≈ 80</option>
+                  <option value="50">Титан ВТ6 — Vc ≈ 50</option>
+                </optgroup>
+                <optgroup label="Прочее">
+                  <option value="400">Пластик / Оргстекло — Vc ≈ 400</option>
+                  <option value="25">Чугун СЧ — Vc ≈ 25</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="calc-group" id="cc-vc-group">
+              <label class="calc-label" for="cc-vc">Скорость резания Vc (м/мин)</label>
+              <input class="calc-input" type="number" id="cc-vc" value="60" min="1" step="1">
+            </div>
+
+            <div class="calc-section-label" style="margin-top:16px">Подача на зуб</div>
+            <div class="calc-grid-2">
+              <div class="calc-group">
+                <label class="calc-label" for="cc-fz">fz (мм/зуб)</label>
+                <input class="calc-input" type="number" id="cc-fz" value="0.02" min="0.001" step="0.001">
+              </div>
+              <div class="calc-group">
+                <label class="calc-label" for="cc-ae">Ширина резания ae (мм)</label>
+                <input class="calc-input" type="number" id="cc-ae" value="5" min="0.1" step="0.1">
+              </div>
+            </div>
+            <div class="calc-grid-2">
+              <div class="calc-group">
+                <label class="calc-label" for="cc-ap">Глубина резания ap (мм)</label>
+                <input class="calc-input" type="number" id="cc-ap" value="2" min="0.01" step="0.1">
+              </div>
+              <div class="calc-group">
+                <label class="calc-label" for="cc-kc">Уд. сила резания kc (Н/мм²)</label>
+                <input class="calc-input" type="number" id="cc-kc" value="2000" min="100" step="100">
+              </div>
+            </div>
+
+            <button class="gen-btn" id="cc-calc-btn" style="margin-top:16px">Рассчитать</button>
+          </div>
+
+          <!-- Results -->
+          <div class="calc-results" id="cc-results">
+            <div class="calc-result-placeholder">
+              <span style="font-size:2rem;opacity:.4">⚙️</span>
+              <span>Заполни параметры и нажми «Рассчитать»</span>
+            </div>
           </div>
         </div>
       </section>
