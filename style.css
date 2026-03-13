@@ -1259,3 +1259,110 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
   font-size: .9rem; gap: 10px;
 }
 .gen-placeholder-icon { font-size: 2.5rem; opacity: .5; }
+
+/* ── Checklist v2: phases + grab badges ──────────────────────── */
+.checklist-phase {
+  margin-bottom: 20px;
+  border: 1px solid var(--color-divider, #2e2c28);
+  border-radius: 12px;
+  overflow: hidden;
+}
+[data-theme="light"] .checklist-phase {
+  border-color: #ddd;
+}
+
+.checklist-phase-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1px solid var(--color-divider, #2e2c28);
+}
+[data-theme="light"] .checklist-phase-header {
+  border-color: #ddd;
+}
+
+.phase-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .75rem;
+  font-weight: 700;
+  width: 28px; height: 28px;
+  border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+  letter-spacing: .05em;
+}
+.phase-1 .phase-num { background: #3b8fe8; }
+.phase-2 .phase-num { background: #2db37a; }
+.phase-3 .phase-num { background: #f08c00; }
+.phase-4 .phase-num { background: #7c55d4; }
+.phase-5 .phase-num { background: #e84a3b; }
+
+.phase-title {
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--color-text, #f0ede6);
+}
+[data-theme="light"] .phase-title { color: #1a1916; }
+
+.phase-sub {
+  font-size: .75rem;
+  color: var(--color-text-muted, #6b6962);
+  margin-left: auto;
+}
+
+.checklist-phase .checklist-list {
+  padding: 8px 0;
+}
+
+/* Grab badge */
+.grab-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(232, 74, 59, .15);
+  color: #e84a3b;
+  border: 1px solid rgba(232, 74, 59, .3);
+  border-radius: 4px;
+  font-size: .68rem;
+  font-weight: 700;
+  padding: 1px 6px;
+  margin-right: 6px;
+  vertical-align: middle;
+  white-space: nowrap;
+  letter-spacing: .03em;
+  flex-shrink: 0;
+}
+[data-theme="light"] .grab-badge {
+  background: rgba(232, 74, 59, .1);
+}
+
+.grab-text {
+  display: inline;
+}
+
+/* Phase accent left border */
+.phase-1 { background: rgba(59, 143, 232, .04); }
+.phase-2 { background: rgba(45, 179, 122, .04); }
+.phase-3 { background: rgba(240, 140, 0, .04); }
+.phase-4 { background: rgba(124, 85, 212, .04); }
+.phase-5 { background: rgba(232, 74, 59, .04); }
+
+.checklist-phase .check-item {
+  padding: 9px 18px;
+}
+
+/* code inline in checklist */
+.checklist-phase code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .8em;
+  background: var(--code-bg, #0f0e0c);
+  color: #c8c6c0;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+[data-theme="light"] .checklist-phase code {
+  background: #eee;
+  color: #333;
+}

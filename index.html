@@ -121,9 +121,6 @@
         <li><a href="#five-axis" class="nav-link">
           <span class="nav-icon">✦</span>5-осевые
         </a></li>
-        <li><a href="#probes" class="nav-link">
-          <span class="nav-icon">⊙</span>Калибровка щупов
-        </a></li>
         <li><a href="#generator" class="nav-link generator-link">
           <span class="nav-icon">⚡</span>Генератор программ
         </a></li>
@@ -1035,126 +1032,199 @@ END PGM THREAD MM</code></pre>
         </h2>
 
         <div class="checklist-intro">
-          <p>Нажимайте на каждый пункт для отметки. Все галочки должны быть зелёными перед нажатием CYCLE START.</p>
+          <p>Тапни — отмечается. Все шаги должны быть зелёными перед <strong>CYCLE START</strong>. Грабли помечены <span class="grab-badge">💀 грабли</span> — это реально случается и стоит дорого.</p>
           <button class="reset-checklist-btn" id="resetChecklist">Сбросить все</button>
         </div>
 
-        <div class="checklist-grid">
-
-          <div class="checklist-group">
-            <h3 class="checklist-group-title">
-              <span class="group-icon">🔧</span> Инструмент
-            </h3>
-            <ul class="checklist-list" role="list">
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Номер инструмента в программе совпадает с физически установленным</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Длина и радиус инструмента внесены в таблицу (H/D на Fanuc, TOOL.T на Heidenhain)</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span><strong>Fanuc:</strong> G43 H... присутствует перед первым движением по Z</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Инструмент надёжно зажат, вылет соответствует глубине обработки</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Коррекция радиуса (G41/G42 или RL/RR) выключается до конца программы</span>
-              </li>
-            </ul>
+        <!-- ─── ЭТАП 1: ДО ВКЛЮЧЕНИЯ ПРОГРАММЫ ─── -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-1">
+            <span class="phase-num">01</span>
+            <span class="phase-title">Станок и деталь</span>
+            <span class="phase-sub">до открытия программы</span>
           </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Референс (home) выполнен после включения — все оси в нуле станка</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Деталь зажата надёжно, усилие не деформирует заготовку (тонкостенки — особо)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box grab-item" data-tip="Щупы, прихваты, болты внутри зоны — причина №1 краша">
+                <span class="grab-badge">💀 грабли</span> Зона обработки чистая: убраны щупы, прихваты, инструменты измерения
+              </span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Дверь станка закрыта, блокировки сработали (индикатор на пульте)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Давление воздуха / гидравлики зажима в норме (манометр)</span>
+            </li>
+          </ul>
+        </div>
 
-          <div class="checklist-group">
-            <h3 class="checklist-group-title">
-              <span class="group-icon">📍</span> Нули и координаты
-            </h3>
-            <ul class="checklist-list" role="list">
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Нулевая точка детали привязана верно (G54 или CYCL DEF 7)</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Ось Z: ноль на поверхности детали или на торце — соответствует программе</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Зазор R-плоскости (R5 или Q200) больше зажимных элементов</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Система координат (G17/G18/G19) соответствует ориентации детали</span>
-              </li>
-            </ul>
+        <!-- ─── ЭТАП 2: ИНСТРУМЕНТ ─── -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-2">
+            <span class="phase-num">02</span>
+            <span class="phase-title">Инструмент</span>
+            <span class="phase-sub">коррекции и вылет</span>
           </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Физически установленный инструмент совпадает с номером в программе (T1 = фреза Ø10, не сверло)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> Длина инструмента обмерена и внесена в таблицу: H-offset (Fanuc), длина в таблице инструментов (Siemens), TOOL.T (Heidenhain)
+              </span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> <strong>Fanuc:</strong> G43 H[номер] стоит <em>до</em> первого движения по Z — без него коррекция длины не активна
+              </span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Вылет инструмента достаточен для глубины + зазора, хвостовик не упрётся в деталь</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Инструмент надёжно зажат в патроне / оправке (момент затяжки)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Диаметр фрезы в таблице соответствует реальному (важно при коррекции радиуса G41/G42)</span>
+            </li>
+          </ul>
+        </div>
 
-          <div class="checklist-group">
-            <h3 class="checklist-group-title">
-              <span class="group-icon">⚙️</span> Программа
-            </h3>
-            <ul class="checklist-list" role="list">
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Первая строка содержит G40 G49 G80 (Fanuc) или сброс смещений</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Единицы измерения (G20/G21 или G70/G71) соответствуют программе</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Программа прошла графическое моделирование (sim / проверка траектории)</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Программа заканчивается M30 (Fanuc/Siemens) или END PGM (Heidenhain)</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Подпрограммы присутствуют и вызываются правильным синтаксисом</span>
-              </li>
-            </ul>
+        <!-- ─── ЭТАП 3: НУЛИ И КООРДИНАТЫ ─── -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-3">
+            <span class="phase-num">03</span>
+            <span class="phase-title">Нули и координаты</span>
+            <span class="phase-sub">привязка детали</span>
           </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> Нулевая точка детали привязана верно и записана в нужную ячейку: G54 (Fanuc/Siemens), CYCL DEF 7.1 / preset (Heidenhain)
+              </span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> Z-ноль: поверхность в программе совпадает с реальной точкой привязки — путаница «верх детали / верх тисков» бьёт в стол
+              </span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Зазор R-плоскости (R / Q200) выше всех зажимных элементов и прихватов</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Активная система координат в программе (G54–G59) совпадает с той, куда записан ноль</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> Остаточное смещение предыдущей детали сброшено — G54 не содержит «чужой» ноль от прошлой программы
+              </span>
+            </li>
+          </ul>
+        </div>
 
-          <div class="checklist-group">
-            <h3 class="checklist-group-title">
-              <span class="group-icon">🏭</span> Станок и деталь
-            </h3>
-            <ul class="checklist-list" role="list">
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Деталь надёжно зажата, усилие зажима не деформирует заготовку</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Зона обработки свободна — нет прихватов, болтов, измерительных щупов</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Первый запуск — подача Override на 5–10%, скорость Override снижена</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>Рука у кнопки Feed Hold / аварийного стопа при первом прогоне</span>
-              </li>
-              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
-                <span class="check-box"></span>
-                <span>СОЖ включена (если требуется), давление в норме</span>
-              </li>
-            </ul>
+        <!-- ─── ЭТАП 4: ПРОГРАММА ─── -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-4">
+            <span class="phase-num">04</span>
+            <span class="phase-title">Программа</span>
+            <span class="phase-sub">синтаксис и логика</span>
           </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Программа прошла графическое моделирование (симуляция на стойке или в CAM)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> Первая строка сбрасывает всё: <code>G40 G49 G80</code> (Fanuc), <code>TRAFOOF CYCLE800()</code> (Siemens 5ос.), <code>CYCL DEF 0</code> (Heidenhain) — без этого «хвост» предыдущей программы активен
+              </span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Единицы мм/дюймы: G21 или G20 (Fanuc), DIAMOF/DIAMON совпадает с заготовкой</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> Коррекция радиуса (G41/G42 или RL/RR) выключается (G40/R0) до <em>каждой</em> смены инструмента и в конце программы
+              </span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Все вызовы подпрограмм L / M98 / CALL имеют соответствующие файлы на стойке</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Программа заканчивается M30 (Fanuc/Siemens) или END PGM (Heidenhain)</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- ─── ЭТАП 5: ПЕРВЫЙ ПРОГОН ─── -->
+        <div class="checklist-phase">
+          <div class="checklist-phase-header phase-5">
+            <span class="phase-num">05</span>
+            <span class="phase-title">Первый прогон</span>
+            <span class="phase-sub">запуск и контроль</span>
+          </div>
+          <ul class="checklist-list" role="list">
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> Override подачи на 5–10%, Override шпинделя снижен — первый проход всегда медленно
+              </span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Первое движение по Z проверено в покадровом режиме (Single Block / Satzweise)</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span>Рука у Feed Hold и аварийного стопа весь первый прогон</span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> СОЖ включена до входа инструмента в металл — сухой вход в жаропрочном / алюминии = наклёп или налипание
+              </span>
+            </li>
+            <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+              <span class="check-box"></span>
+              <span class="grab-text">
+                <span class="grab-badge">💀 грабли</span> После первой детали — замер. Коррекция до запуска серии, не после третьей
+              </span>
+            </li>
+          </ul>
         </div>
 
         <div class="checklist-progress" id="checklistProgress">
           <div class="progress-bar">
             <div class="progress-fill" id="progressFill" style="width: 0%"></div>
           </div>
-          <span id="progressLabel">0 / 18 выполнено</span>
+          <span id="progressLabel">0 / 27 выполнено</span>
         </div>
       </section>
 
@@ -1366,160 +1436,8 @@ END PGM TILT5AX MM</code></pre>
         </div>
       </section>
 
-      <!-- ===== КАЛИБРОВКА ЩУПОВ ===== -->
-      <section id="probes" class="content-section">
-        <h2 class="section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
-          Калибровка щупов и грибков
-        </h2>
 
-        <div class="cards-grid">
-          <!-- FANUC -->
-          <div class="info-card fanuc-card" data-brands="fanuc">
-            <div class="card-header">
-              <span class="brand-badge fanuc">Fanuc</span>
-              <h3>Щуп детали — макросы Renishaw</h3>
-            </div>
-            <div class="card-body">
-              <p>Калибровка через макро-программы O9801/O9802. Данные хранятся в переменных <strong>#500–#519</strong>.</p>
-              <ul class="feature-list">
-                <li><strong>#500–#503</strong> — отступы X+/X−/Y+/Y−</li>
-                <li><strong>#511</strong> — электронная длина щупа</li>
-                <li><strong>#528–#529</strong> — позиция грибка TT (X, Y)</li>
-                <li><strong>#530</strong> — диаметр диска грибка</li>
-              </ul>
-              <div class="code-block">
-                <div class="code-label">Калибровка щупа детали (O8000)</div>
-                <pre><code>O8000 (КАЛИБРОВКА ЩУПА ДЕТАЛИ)
-T31 M06          ; щуп в шпиндель
-G43 H31 Z100.
-G54
-; Позиция над калибровочным кольцом
-G00 X0 Y0
-G01 Z5. F1000.
-; Вызов макроса Renishaw
-M98 P9801        ; калибровка X+/X−/Y+/Y−
-M98 P9802        ; калибровка Z (длина)
-G00 Z100. M05
-M30</code></pre>
-              </div>
-              <div class="code-block">
-                <div class="code-label">Калибровка грибка TT (O8500)</div>
-                <pre><code>O8500 (КАЛИБРОВКА ГРИБКА TT)
-; Привести шпиндель над грибком
-G53 G00 X#528 Y#529  ; позиция из переменных
-M98 P9701            ; калибровка TT
-; #523 = обновлённое расстояние до TT
-M30</code></pre>
-              </div>
-            </div>
-          </div>
-
-          <!-- SIEMENS -->
-          <div class="info-card siemens-card" data-brands="siemens">
-            <div class="card-header">
-              <span class="brand-badge siemens">Siemens</span>
-              <h3>CYCLE976 / CYCLE971</h3>
-            </div>
-            <div class="card-body">
-              <p>Щуп детали — <strong>CYCLE976</strong>, грибок TT — <strong>CYCLE971</strong> (режим калибровки). Данные в массивах <code>_WP[]</code> и <code>_TP[]</code>.</p>
-              <ul class="feature-list">
-                <li><strong>CYCLE976 _MVAR=1</strong> — калибровка в отверстии (известный центр)</li>
-                <li><strong>CYCLE976 _MVAR=10008</strong> — калибровка с поиском центра</li>
-                <li><strong>CYCLE971</strong> — измерение длины и радиуса инструмента через TT</li>
-              </ul>
-              <div class="code-block">
-                <div class="code-label">Калибровка щупа детали</div>
-                <pre><code>; КАЛИБРОВКА ЩУПА — CYCLE976
-T9 D1            ; щуп тип 710
-M6
-G54 G90 G17
-G0 X100 Y50 Z10  ; над кольцом Ø50
-CYCLE976(
-  _MVAR=1,       ; в отверстии, известный центр
-  _SETVAL=50,    ; диаметр кольца [мм]
-  _MA=1,         ; ось: абсцисса
-  _PRNUM=1,      ; номер щупа
-  _FA=3,         ; путь измерения
-  _VMS=0,        ; скорость (авто)
-  _TZL=0.005,    ; допуск нуля
-  _TSA=0.1)      ; допуск отклонения
-M30</code></pre>
-              </div>
-              <div class="code-block">
-                <div class="code-label">Измерение инструмента через TT</div>
-                <pre><code>; ИЗМЕРЕНИЕ ДЛИНЫ ЧЕРЕЗ ГРИБОК
-T5 D1
-M6 M3 S500
-CYCLE971(
-  _MVAR=1,       ; измерить длину
-  _KNUM=5,       ; номер инструмента
-  _SCHNR=1,      ; номер кромки D
-  _FA=3,
-  _NMSP=1)       ; число измерений
-M30</code></pre>
-              </div>
-            </div>
-          </div>
-
-          <!-- HEIDENHAIN -->
-          <div class="info-card heidenhain-card" data-brands="heidenhain">
-            <div class="card-header">
-              <span class="brand-badge heidenhain">Heidenhain</span>
-              <h3>CYCL 460–462 (TS) / 480–484 (TT)</h3>
-            </div>
-            <div class="card-body">
-              <p>Щуп детали TS — циклы <strong>460–462</strong>. Грибок TT — циклы <strong>480–484</strong>. Данные пишутся в <strong>TOOL.T</strong>.</p>
-              <ul class="feature-list">
-                <li><strong>CYCL 460</strong> — полная калибровка TS по шару (длина + радиус + биение)</li>
-                <li><strong>CYCL 461</strong> — только длина щупа TS</li>
-                <li><strong>CYCL 462</strong> — только радиус шарика TS</li>
-                <li><strong>CYCL 480</strong> — базовая калибровка TT (длина)</li>
-                <li><strong>CYCL 483</strong> — калибровка TT с радиусом инструмента</li>
-              </ul>
-              <div class="code-block">
-                <div class="code-label">Калибровка TS по шару (CYCL 460)</div>
-                <pre><code>; Позиционировать щуп над центром шара
-TOOL CALL 99 Z S0  ; вызов щупа TS
-L Z+50 FMAX
-CYCL DEF 460 CALIBRATE TS
-  Q407=+12.5   ; радиус калибр.шара [мм]
-  Q320=+2.0    ; зазор безопасности
-  Q301=+1      ; отвод: от FMAX
-  Q423=+4      ; точек измерения: 4
-  Q380=+0      ; опорный угол: 0°
-CYCL CALL      ; выполнить</code></pre>
-              </div>
-              <div class="code-block">
-                <div class="code-label">Измерение длины инструмента (CYCL 481)</div>
-                <pre><code>; Измерение длины через грибок TT
-TOOL CALL 5 Z S500
-CYCL DEF 481 ИЗМЕРЕНИЕ ДЛИНЫ
-  Q380=+0      ; угол шпинделя
-  Q260=+80     ; безопасная высота
-  Q341=+1      ; 1=измерить с вращением
-CYCL CALL M3</code></pre>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Последовательность калибровки -->
-        <div class="procedure-block">
-          <h3 class="procedure-title">Типовая последовательность калибровки перед сменой щупа</h3>
-          <ol class="procedure-list">
-            <li><span class="step-num">1</span><span>Установить щуп в шпиндель, убедиться в надёжности крепления</span></li>
-            <li><span class="step-num">2</span><span>Задать предварительную длину щупа в таблице инструментов (примерное значение ±5 мм)</span></li>
-            <li><span class="step-num">3</span><span>Подвести щуп над калибровочным кольцом / шаром на безопасной высоте вручную</span></li>
-            <li><span class="step-num">4</span><span>Запустить цикл калибровки — стойка определит точную длину и радиус</span></li>
-            <li><span class="step-num">5</span><span>Проверить результат: радиус шарика ≈ паспортному значению (обычно 1.0–3.0 мм)</span></li>
-            <li><span class="step-num">6</span><span>Для грибка TT: позиционировать калибровочный инструмент (эталон), запустить цикл TT</span></li>
-            <li><span class="step-num">7</span><span>Все последующие измерения инструментов выполнять только после калибровки TT</span></li>
-          </ol>
-        </div>
-      </section>
-
-      <!-- ===== ГЕНЕРАТОР ПРОГРАММ ===== -->
+            <!-- ===== ГЕНЕРАТОР ПРОГРАММ ===== -->
       <section id="generator" class="content-section">
         <h2 class="section-title">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M9 8l2 2-2 2M13 12h2"/></svg>
