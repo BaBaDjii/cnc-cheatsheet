@@ -1957,3 +1957,96 @@ kbd {
   .header-search kbd { display: none; }
   .brand-filters { display: none; }
 }
+
+/* ===== DIFF-TABLE: base styles + mobile card layout ===== */
+.table-wrap {
+  overflow-x: auto;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+}
+.diff-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .875rem;
+}
+.diff-table thead tr {
+  background: var(--color-surface-2);
+}
+.diff-table th {
+  padding: 10px 14px;
+  text-align: left;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+.diff-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-border);
+  color: var(--color-text);
+  vertical-align: top;
+  line-height: 1.5;
+}
+.diff-table tbody tr:last-child td { border-bottom: none; }
+.diff-table tbody tr:hover { background: var(--color-surface-2); }
+.diff-table td strong { color: var(--color-text); }
+.diff-table code {
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+}
+
+/* Mobile: stack each row as a card */
+@media (max-width: 600px) {
+  .table-wrap {
+    border: none;
+    border-radius: 0;
+    overflow-x: visible;
+  }
+  .diff-table { display: block; }
+  .diff-table thead { display: none; }
+  .diff-table tbody { display: flex; flex-direction: column; gap: 10px; }
+  .diff-table tbody tr {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-surface-2);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 0;
+  }
+  .diff-table tbody tr:hover { background: var(--color-surface-2); }
+  .diff-table td {
+    display: flex;
+    flex-direction: column;
+    padding: 8px 14px;
+    border-bottom: 1px solid var(--color-border);
+    gap: 2px;
+  }
+  .diff-table tbody tr td:last-child { border-bottom: none; }
+  .diff-table td::before {
+    content: attr(data-label);
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--primary-color);
+    opacity: .8;
+  }
+  /* Hide label for first column (it's the item name — already bold) */
+  .diff-table td:first-child::before { display: none; }
+  .diff-table td:first-child {
+    background: rgba(79,152,163,.06);
+    font-weight: 600;
+    font-size: .9rem;
+    border-bottom: 1px solid var(--color-border);
+    padding: 10px 14px;
+  }
+}
