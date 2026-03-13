@@ -1910,3 +1910,63 @@ kbd {
 @media (max-width: 640px) {
   .tips-grid { grid-template-columns: 1fr; }
 }
+
+/* ===== MOBILE HEADER FIX — two-row layout ===== */
+@media (max-width: 640px) {
+  .site-header {
+    height: auto;
+  }
+  .header-inner {
+    flex-wrap: wrap;
+    padding: 8px 12px;
+    gap: 6px;
+    row-gap: 6px;
+  }
+  /* Row 1: logo on left, burger on right */
+  .logo {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+  /* Row 2: mode switcher + FAQ take full width */
+  .header-mode-row {
+    order: 3;
+    width: 100%;
+    justify-content: flex-start;
+    gap: 6px;
+    flex-shrink: 1;
+  }
+  .mode-switcher {
+    flex: 1 1 auto;
+    display: flex;
+  }
+  .mode-btn {
+    flex: 1 1 0;
+    text-align: center;
+    padding: 6px 8px;
+    font-size: .75rem;
+  }
+  .faq-header-btn {
+    flex-shrink: 0;
+    padding: 6px 10px;
+    font-size: .75rem;
+  }
+  /* Row 1: search takes remaining space next to logo */
+  .header-search {
+    order: 2;
+    flex: 0 0 auto;
+    max-width: 160px;
+    min-width: 0;
+  }
+  /* Brand filters already hidden on mobile */
+  .mob-menu-btn {
+    order: 1;
+    flex-shrink: 0;
+  }
+}
+
+/* Fix layout min-height on mobile (header is now 2 rows ~6.5rem) */
+@media (max-width: 640px) {
+  .app-layout {
+    min-height: calc(100dvh - 6.5rem - 3rem);
+  }
+}

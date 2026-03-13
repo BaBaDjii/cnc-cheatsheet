@@ -975,7 +975,7 @@ function escapeRegex(str) {
 
 })();
 
-// ─── Mode Switcher (Тыкатель / Научился) ─────────────────────────────────────
+// ─── Mode Switcher (Новичок / Продвинутый) ─────────────────────────────────────
 (function () {
   const DEFAULT_MODE = 'beginner';
 

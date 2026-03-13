@@ -61,10 +61,10 @@
       <div class="header-mode-row">
         <div class="mode-switcher" id="modeSwitcher" role="group" aria-label="Режим">
           <button class="mode-btn active" data-mode="beginner" title="Только база — смена инструмента, нули, чеклист">
-            🟢 Тыкатель
+            🟢 Новичок
           </button>
           <button class="mode-btn" data-mode="advanced" title="G/M коды, циклы, 5 осей, генератор">
-            🔵 Научился
+            🔵 Продвинутый
           </button>
         </div>
         <button class="faq-header-btn" id="faqHeaderBtn" title="Частые вопросы">
@@ -144,6 +144,9 @@
         <li data-mode-nav="beginner"><a href="#b-measuring" class="mob-nav-link" data-mode-nav="beginner">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 6H3"/><path d="M21 12H3"/><path d="M21 18H3"/><line x1="8" y1="3" x2="8" y2="9"/><line x1="16" y1="15" x2="16" y2="21"/></svg>
           Мерительный инструмент</a></li>
+        <li data-mode-nav="beginner"><a href="#b-drawings" class="mob-nav-link" data-mode-nav="beginner">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Чтение чертежей</a></li>
         <li data-mode-nav="beginner"><a href="#b-zero" class="mob-nav-link" data-mode-nav="beginner">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
           Привязка нуля</a></li>
@@ -222,6 +225,10 @@
         <li data-mode-nav="beginner"><a href="#b-measuring" class="nav-link" data-mode-nav="beginner">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 6H3"/><path d="M21 12H3"/><path d="M21 18H3"/><line x1="8" y1="3" x2="8" y2="9"/><line x1="16" y1="15" x2="16" y2="21"/></svg>
           Мерительный инструмент
+        </a></li>
+        <li data-mode-nav="beginner"><a href="#b-drawings" class="nav-link" data-mode-nav="beginner">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Чтение чертежей
         </a></li>
         <li data-mode-nav="beginner"><a href="#b-zero" class="nav-link" data-mode-nav="beginner">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
@@ -1852,6 +1859,161 @@ M3 M8</code></pre>
             <li>Не проверил ноль микрометра — всё смещено на 0,02 мм, партия в браке</li>
             <li>Нутромером искал минимум вместо максимума — занизил диаметр отверстия</li>
             <li>Забыл протереть инструмент — стружка под губкой дала плюс 0,1 мм</li>
+          </ul>
+        </div>
+      </section>
+
+
+
+      <!-- ===== ЧТЕНИЕ ЧЕРТЕЖЕЙ (beginner) ===== -->
+      <section id="b-drawings" class="content-section" data-mode="beginner">
+        <h2 class="section-title">
+          <span class="section-icon">📄</span>
+          Чтение чертежей — коротко о главном
+        </h2>
+        <p class="section-subtitle">Чертёж — это единственная истина о детали. Неправильно прочитал — сделал не то. Вот минимум, который нужно знать оператору.</p>
+
+        <!-- ВИДЫ И РАЗРЕЗЫ -->
+        <h3 class="subsection-title">📐 Виды, разрезы и сечения</h3>
+        <div class="table-wrap">
+          <table class="diff-table">
+            <thead>
+              <tr><th>Обозначение</th><th>Что означает</th><th>Как читать</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Стрелки А–А</strong></td>
+                <td>Разрез по плоскости А–А</td>
+                <td>Найди стрелки с буквой на основном виде — они показывают, где «режут». Вид подписан той же буквой.</td>
+              </tr>
+              <tr>
+                <td><strong>Штриховка</strong></td>
+                <td>Материал «в разрезе»</td>
+                <td>Там, где штриховка — там твёрдый металл. Пустое пространство — полость, отверстие, паз.</td>
+              </tr>
+              <tr>
+                <td><strong>Вид сверху / снизу / сбоку</strong></td>
+                <td>Проекция детали с разных сторон</td>
+                <td>По стандарту: главный вид — спереди, вид сверху — снизу от него, вид слева — справа от него.</td>
+              </tr>
+              <tr>
+                <td><strong>Выносной элемент (кружок + буква)</strong></td>
+                <td>Увеличенный фрагмент</td>
+                <td>Ищи тот же кружок с буквой в другом месте листа — там будет деталь в увеличении с размерами.</td>
+              </tr>
+              <tr>
+                <td><strong>Осевые линии (штрихпунктир)</strong></td>
+                <td>Ось симметрии или центр отверстия</td>
+                <td>Размеры до оси — это радиус. Размеры между осями — расположение отверстий. Не путай с размерной линией.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ДОПУСКИ ФОРМЫ И РАСПОЛОЖЕНИЯ -->
+        <h3 class="subsection-title" style="margin-top:1.75rem">🎯 Знаки допусков формы и расположения</h3>
+        <div class="table-wrap">
+          <table class="diff-table">
+            <thead>
+              <tr><th>Знак</th><th>Название</th><th>Что проверяют</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>⌀</code></td>
+                <td>Диаметр</td>
+                <td>Размер — это диаметр, не радиус. Часто путают при привязке нуля и вводе коррекции.</td>
+              </tr>
+              <tr>
+                <td><code>○</code></td>
+                <td>Допуск круглости</td>
+                <td>Насколько сечение близко к идеальной окружности. Важно для валов и подшипниковых посадок.</td>
+              </tr>
+              <tr>
+                <td><code>⌭</code> / <code>⌀ c рамкой</code></td>
+                <td>Допуск цилиндричности</td>
+                <td>Форма цилиндра по всей длине — не конус, не бочка. Контролируют нутромером на нескольких глубинах.</td>
+              </tr>
+              <tr>
+                <td><code>⊥</code></td>
+                <td>Допуск перпендикулярности</td>
+                <td>Насколько поверхность или ось перпендикулярны базе (указана в рамке справа). Важно для торцов и отверстий.</td>
+              </tr>
+              <tr>
+                <td><code>∥</code></td>
+                <td>Допуск параллельности</td>
+                <td>Поверхность параллельна базовой плоскости. Проверяют индикатором на плите.</td>
+              </tr>
+              <tr>
+                <td><code>◎</code></td>
+                <td>Допуск соосности / позиционный</td>
+                <td>Ось отверстия или вала совпадает с осью базы. Критично для деталей типа «фланец с отверстиями по окружности».</td>
+              </tr>
+              <tr>
+                <td><code>↗</code> / <code>∠</code></td>
+                <td>Допуск наклона</td>
+                <td>Угол поверхности к базе. Значение в рамке — максимальное отклонение в мм на длине.</td>
+              </tr>
+              <tr>
+                <td><code>⌒</code></td>
+                <td>Допуск биения (торцевого / радиального)</td>
+                <td>Биение при вращении вокруг оси. Радиальное — измеряют индикатором сбоку, торцевое — с торца.</td>
+              </tr>
+              <tr>
+                <td><code>⏥</code></td>
+                <td>Допуск плоскостности</td>
+                <td>Поверхность не должна «горбиться» или «прогибаться» больше указанного значения.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- КАК ЧИТАТЬ РАМКУ ДОПУСКА -->
+        <h3 class="subsection-title" style="margin-top:1.75rem">📦 Как читать рамку допуска</h3>
+        <div class="info-block" style="margin-bottom:1rem">
+          <div class="info-title">Структура рамки</div>
+          <p>Рамка делится на 2–3 ячейки: <strong>[знак] | [значение допуска] | [база]</strong><br>
+          Пример: <code>⊥ | 0.05 | A</code> — перпендикулярность не более 0,05 мм относительно базы А.<br>
+          База А обозначена на чертеже треугольником с буквой.</p>
+        </div>
+        <div class="tips-grid">
+          <div class="tip-card">
+            <div class="tip-icon">🔺</div>
+            <div class="tip-body">
+              <div class="tip-title">Треугольник = база</div>
+              <div class="tip-text">Закрашенный или незакрашенный треугольник с буквой — это базовая поверхность. От неё считаются все допуски расположения.</div>
+            </div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">🔢</div>
+            <div class="tip-body">
+              <div class="tip-title">Допуск — это не размер</div>
+              <div class="tip-text">Размер 25±0,05 — это предельные отклонения. Допуск в рамке — это отдельное требование к форме или расположению, независимо от размера.</div>
+            </div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">H/h</div>
+            <div class="tip-body">
+              <div class="tip-title">Посадки: H7/h6</div>
+              <div class="tip-text">Буква — отклонение. Цифра — квалитет (точность). H7 — отверстие, h6 — вал. Чем меньше цифра, тем точнее и дороже. Оператор смотрит в таблицу допусков или спрашивает технолога.</div>
+            </div>
+          </div>
+          <div class="tip-card">
+            <div class="tip-icon">Ra</div>
+            <div class="tip-body">
+              <div class="tip-title">Шероховатость Ra / Rz</div>
+              <div class="tip-text">Ra — среднее арифметическое отклонение профиля. Указывается на поверхности значком √. Ra 1,6 — чистовая, Ra 6,3 — получистовая, Ra 12,5 — черновая. Задаётся режимами резания.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="danger-block" style="margin-top:1.5rem">
+          <div class="danger-title">💀 Частые ошибки при чтении чертежа</div>
+          <ul class="danger-list">
+            <li>Перепутал радиус с диаметром — запрограммировал вдвое меньше</li>
+            <li>Не заметил выносной элемент — пропустил фаску или канавку</li>
+            <li>Принял осевую линию за размерную — посчитал неверное расстояние между отверстиями</li>
+            <li>Игнорировал рамку допуска — деталь в размере, но не проходит по соосности</li>
+            <li>Не нашёл базу — измерял не от той поверхности, все отверстия сдвинуты</li>
           </ul>
         </div>
       </section>
