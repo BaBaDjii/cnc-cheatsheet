@@ -1012,9 +1012,10 @@ function escapeRegex(str) {
     // Tips based on ae/D ratio
     const engRatio = ae / D;
     let tipText = '';
-    if (engRatio <= 0.1) tipText = 'Trochoidal / High-Speed — малое ae, большое ap. Хорошо для нержавейки и жаропрочных.';
-    else if (engRatio <= 0.5) tipText = 'Умеренный съём. Оптимально для большинства операций.';
-    else tipText = 'Полное врезание (slotting). Максимальная нагрузка — снизь Vf на 30–50%.';
+    const pct = Math.round(engRatio * 100);
+    if (engRatio <= 0.1) tipText = `ae = ${pct}% от D — трохоидальная стратегия. Фреза холодная, служит дольше. Можно увеличить ap.`;
+    else if (engRatio <= 0.5) tipText = `ae = ${pct}% от D — нормальный режим. Хорошо для большинства операций.`;
+    else tipText = `ae = ${pct}% от D — полное врезание. Большая нагрузка на фрезу и шпиндель. Снизь Vf на 30–50%.`;
 
     res.innerHTML = `
       <div class="calc-result-grid">
