@@ -1405,3 +1405,243 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
 @media (max-width: 900px) {
   .mob-menu-btn { display: flex; }
 }
+
+/* ===== MODE SWITCHER ===== */
+.mode-switcher {
+  display: flex;
+  gap: 4px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 3px;
+  flex-shrink: 0;
+}
+.mode-btn {
+  padding: 5px 14px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background .15s, color .15s;
+  font-family: inherit;
+}
+.mode-btn.active {
+  background: var(--color-surface-offset);
+  color: var(--color-text);
+}
+.mode-btn[data-mode="beginner"].active { color: #2db37a; }
+.mode-btn[data-mode="advanced"].active { color: #3b8fe8; }
+
+@media (max-width: 500px) {
+  .mode-btn { padding: 5px 10px; font-size: .73rem; }
+}
+
+/* ===== BEGINNER SECTION STYLES ===== */
+
+.section-intro {
+  color: var(--color-text-muted);
+  font-size: var(--text-sm, .875rem);
+  margin-bottom: var(--space-6, 1.5rem);
+  line-height: 1.6;
+}
+
+/* Таблица базовых кодов */
+.beg-table-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+.beg-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .875rem;
+}
+.beg-table th {
+  text-align: left;
+  padding: 8px 14px;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+}
+.beg-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--color-divider);
+  vertical-align: top;
+  line-height: 1.5;
+  color: var(--color-text);
+}
+.beg-table tr:last-child td { border-bottom: none; }
+.beg-table tr.row-warn td { background: rgba(232,74,59,.06); }
+.beg-table code {
+  background: var(--code-bg, #0f0e0c);
+  color: var(--code-text, #c8c6c0);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: .82rem;
+  font-family: var(--font-mono);
+}
+
+/* Блок отличий по стойкам */
+.beg-diff-block {
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.beg-diff-title {
+  padding: 10px 16px;
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-2);
+}
+.beg-diff-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+@media (max-width: 700px) {
+  .beg-diff-grid { grid-template-columns: 1fr; }
+}
+.beg-diff-cell {
+  padding: 14px 16px;
+  font-size: .82rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  border-right: 1px solid var(--color-border);
+}
+.beg-diff-cell:last-child { border-right: none; }
+.beg-diff-cell code {
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+}
+.fanuc-bg  { background: rgba(59,143,232,.07); }
+.siemens-bg { background: rgba(240,140,0,.07); }
+.heid-bg   { background: rgba(45,179,122,.07); }
+
+.beg-sys {
+  display: inline-block;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+}
+.beg-sys.fanuc       { color: #3b8fe8; background: rgba(59,143,232,.15); }
+.beg-sys.siemens     { color: #f08c00; background: rgba(240,140,0,.15); }
+.beg-sys.heidenhain  { color: #2db37a; background: rgba(45,179,122,.15); }
+
+/* Карточки смены инструмента и нуля */
+.toolchange-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px) { .toolchange-grid { grid-template-columns: 1fr; } }
+
+.tc-card {
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.tc-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--color-border);
+}
+.fanuc-bg-soft   { background: rgba(59,143,232,.1); }
+.siemens-bg-soft { background: rgba(240,140,0,.1); }
+.heid-bg-soft    { background: rgba(45,179,122,.1); }
+
+.tc-body { padding: 16px; }
+
+.tc-steps {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.tc-steps li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: .875rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+.tc-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .72rem;
+  font-weight: 700;
+  color: var(--color-text-faint);
+  margin-top: 1px;
+}
+.tc-steps li strong { color: var(--color-text); }
+.tc-steps code {
+  background: var(--code-bg);
+  color: var(--code-text);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: .8rem;
+}
+.tc-example {
+  background: var(--code-bg);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.tc-example-label {
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--color-text-faint);
+  margin-bottom: 6px;
+}
+.tc-example pre {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  color: var(--code-text);
+  white-space: pre;
+}
+.tc-example code { background: none; padding: 0; color: inherit; }
+.beg-warn-inline {
+  font-size: .78rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+  padding: 8px 10px;
+  background: rgba(240,192,64,.08);
+  border-left: 2px solid #f0c040;
+  border-radius: 0 6px 6px 0;
+}
+.beg-danger {
+  margin-top: 1.5rem;
+}
+
+/* Опасные баннеры в секциях новичка */
+kbd {
+  display: inline-block;
+  padding: 2px 6px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-size: .75rem;
+  font-family: var(--font-mono);
+  color: var(--color-text-muted);
+}

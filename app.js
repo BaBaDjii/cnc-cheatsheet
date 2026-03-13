@@ -974,3 +974,70 @@ function escapeRegex(str) {
   }
 
 })();
+
+// ─── Mode Switcher (Тыкатель / Научился) ─────────────────────────────────────
+(function () {
+  const DEFAULT_MODE = 'beginner';
+
+  // beginner: показываем beginner + both
+  // advanced: показываем advanced + both
+  function applyMode(mode) {
+    const html = document.documentElement;
+    html.setAttribute('data-mode', mode);
+
+    // Секции контента
+    document.querySelectorAll('[data-mode]').forEach(el => {
+      if (el.tagName === 'SECTION') {
+        const m = el.getAttribute('data-mode');
+        const show = m === mode || m === 'both';
+        el.style.display = show ? '' : 'none';
+      }
+    });
+
+    // Nav-ссылки в sidebar и drawer
+    document.querySelectorAll('[data-mode-nav]').forEach(el => {
+      const m = el.getAttribute('data-mode-nav');
+      const show = m === mode || m === 'both';
+      // Скрываем/показываем <li> родителя или сам элемент
+      const li = el.closest('li') || el;
+      li.style.display = show ? '' : 'none';
+    });
+
+    // Кнопки переключателя
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.mode === mode);
+    });
+
+    // При смене режима — скроллим наверх к первой видимой секции
+    const firstVisible = document.querySelector('[data-mode].content-section:not([style*="none"])');
+    if (firstVisible) {
+      firstVisible.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Обновляем nav-link active state
+    updateNavActive();
+
+    
+  }
+
+  function updateNavActive() {
+    // Сбрасываем активную ссылку — перейдём на первую видимую секцию
+    document.querySelectorAll('.nav-link.active, .mob-nav-link.active').forEach(a => a.classList.remove('active'));
+  }
+
+  // Инициализация
+  function init() {
+    const saved = DEFAULT_MODE;
+    applyMode(saved);
+
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => applyMode(btn.dataset.mode));
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
