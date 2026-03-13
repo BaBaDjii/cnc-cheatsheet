@@ -68,12 +68,57 @@
           <button class="brand-btn siemens active" data-brand="siemens">Siemens</button>
           <button class="brand-btn heidenhain active" data-brand="heidenhain">Heidenhain</button>
         </div>
-        <button class="theme-toggle" data-theme-toggle aria-label="Переключить тему">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <button class="mob-menu-btn" id="mobMenuBtn" aria-label="Навигация" aria-expanded="false">
+          <span></span><span></span><span></span>
         </button>
       </div>
     </div>
   </header>
+
+  <!-- MOBILE NAV DRAWER -->
+  <div class="mob-drawer" id="mobDrawer" aria-hidden="true">
+    <div class="mob-drawer-backdrop" id="mobBackdrop"></div>
+    <nav class="mob-drawer-panel" aria-label="Разделы (мобильная навигация)">
+      <div class="mob-drawer-header">
+        <span class="mob-drawer-title">Разделы</span>
+        <button class="mob-drawer-close" id="mobClose" aria-label="Закрыть">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <ul class="mob-nav-list" role="list">
+        <li><a href="#g-codes" class="mob-nav-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          G-коды</a></li>
+        <li><a href="#m-codes" class="mob-nav-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          M-коды</a></li>
+        <li><a href="#cycles" class="mob-nav-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Циклы</a></li>
+        <li><a href="#offsets" class="mob-nav-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Смещения и нули</a></li>
+        <li><a href="#tool-correction" class="mob-nav-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          Коррекция инструмента</a></li>
+        <li><a href="#zero-points" class="mob-nav-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Работа с нулями</a></li>
+        <li><a href="#dangerous" class="mob-nav-link mob-danger">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Опасные различия</a></li>
+        <li><a href="#programs" class="mob-nav-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Примеры программ</a></li>
+        <li><a href="#five-axis" class="mob-nav-link">✦ 5-осевые</a></li>
+        <li><a href="#generator" class="mob-nav-link mob-generator">⚡ Генератор программ</a></li>
+        <li><a href="#cutting-calc" class="mob-nav-link">⚙️ Режимы резания</a></li>
+        <li><a href="#checklist" class="mob-nav-link">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Чеклист запуска</a></li>
+      </ul>
+    </nav>
+  </div>
 
   <!-- SEARCH RESULTS OVERLAY -->
   <div id="searchResults" class="search-overlay" hidden>
