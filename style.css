@@ -1822,3 +1822,91 @@ kbd {
   font-family: var(--font-mono);
   font-size: .78rem;
 }
+
+/* ===== TOOLHOLDER SECTION — tips grid, danger block, info block ===== */
+.subsection-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 1.75rem 0 .75rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid var(--color-border);
+}
+.info-block {
+  background: rgba(79,152,163,.1);
+  border: 1px solid rgba(79,152,163,.25);
+  border-left: 4px solid var(--primary-color);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+.info-title {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: .4rem;
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.info-block p { margin: 0; font-size: .9rem; color: var(--color-text-muted); }
+.danger-block {
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-left: 4px solid var(--danger-color);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+}
+.danger-block .danger-title {
+  font-weight: 700;
+  color: var(--danger-color);
+  margin-bottom: .6rem;
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  border-bottom: none;
+}
+.danger-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .4rem;
+}
+.danger-list li {
+  font-size: .88rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: .85rem;
+}
+.tip-card {
+  display: flex;
+  gap: .85rem;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 1rem;
+  transition: border-color .18s;
+}
+.tip-card:hover { border-color: var(--primary-color); }
+.tip-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.tip-body { display: flex; flex-direction: column; gap: .3rem; }
+.tip-title {
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.tip-text {
+  font-size: .83rem;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+@media (max-width: 640px) {
+  .tips-grid { grid-template-columns: 1fr; }
+}
