@@ -935,6 +935,7 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
 @media (max-width: 900px) {
   .app-layout {
     grid-template-columns: 1fr;
+    min-height: auto;
   }
 
   .sidebar {
@@ -1911,62 +1912,48 @@ kbd {
   .tips-grid { grid-template-columns: 1fr; }
 }
 
-/* ===== MOBILE HEADER FIX — two-row layout ===== */
-@media (max-width: 640px) {
-  .site-header {
-    height: auto;
-  }
+
+
+/* ===== MOBILE HEADER: two-row grid layout ===== */
+@media (max-width: 600px) {
+  .site-header { height: auto; }
+
   .header-inner {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-areas:
+      "logo search burger"
+      "modes modes modes";
+    grid-template-columns: auto 1fr auto;
+    grid-template-rows: auto auto;
+    align-items: center;
     padding: 8px 12px;
     gap: 6px;
-    row-gap: 6px;
+    height: auto;
   }
-  /* Row 1: logo on left, burger on right */
-  .logo {
-    flex: 1 1 auto;
-    min-width: 0;
-  }
-  /* Row 2: mode switcher + FAQ take full width */
+
+  .logo          { grid-area: logo; }
+  .header-search { grid-area: search; max-width: none; }
+  .mob-menu-btn  { grid-area: burger; }
   .header-mode-row {
-    order: 3;
-    width: 100%;
-    justify-content: flex-start;
-    gap: 6px;
-    flex-shrink: 1;
-  }
-  .mode-switcher {
-    flex: 1 1 auto;
+    grid-area: modes;
     display: flex;
+    gap: 6px;
+    width: 100%;
   }
+  .mode-switcher { flex: 1 1 auto; display: flex; }
   .mode-btn {
     flex: 1 1 0;
     text-align: center;
-    padding: 6px 8px;
-    font-size: .75rem;
+    padding: 6px 6px;
+    font-size: .74rem;
   }
   .faq-header-btn {
     flex-shrink: 0;
     padding: 6px 10px;
-    font-size: .75rem;
+    font-size: .74rem;
   }
-  /* Row 1: search takes remaining space next to logo */
-  .header-search {
-    order: 2;
-    flex: 0 0 auto;
-    max-width: 160px;
-    min-width: 0;
-  }
-  /* Brand filters already hidden on mobile */
-  .mob-menu-btn {
-    order: 1;
-    flex-shrink: 0;
-  }
-}
 
-/* Fix layout min-height on mobile (header is now 2 rows ~6.5rem) */
-@media (max-width: 640px) {
-  .app-layout {
-    min-height: calc(100dvh - 6.5rem - 3rem);
-  }
+  /* remove kbd shortcut in search on mobile */
+  .header-search kbd { display: none; }
+  .brand-filters { display: none; }
 }
