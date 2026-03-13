@@ -112,7 +112,6 @@
           Примеры программ</a></li>
         <li><a href="#five-axis" class="mob-nav-link">✦ 5-осевые</a></li>
         <li><a href="#generator" class="mob-nav-link mob-generator">⚡ Генератор программ</a></li>
-        <li><a href="#cutting-calc" class="mob-nav-link">⚙️ Режимы резания</a></li>
         <li><a href="#checklist" class="mob-nav-link">
           <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           Чеклист запуска</a></li>
@@ -168,9 +167,6 @@
         </a></li>
         <li><a href="#generator" class="nav-link generator-link">
           <span class="nav-icon">⚡</span>Генератор программ
-        </a></li>
-        <li><a href="#cutting-calc" class="nav-link calc-link">
-          <span class="nav-icon">⚙️</span>Режимы резания
         </a></li>
         <li><a href="#checklist" class="nav-link checklist-link">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
@@ -1543,89 +1539,6 @@ END PGM TILT5AX MM</code></pre>
         </div>
       </section>
 
-      <!-- ===== КАЛЬКУЛЯТОР РЕЖИМОВ ===== -->
-      <section id="cutting-calc" class="content-section">
-        <h2 class="section-title">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="13" y2="14"/></svg>
-          Калькулятор режимов резания
-        </h2>
-        <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-6)">Введи параметры инструмента и материала — получи n, Vf, fz. Формулы стандартные: n = Vc·1000 / (π·D), Vf = n·fz·z.</p>
-
-        <div class="calc-layout">
-          <!-- Inputs -->
-          <div class="calc-inputs">
-            <div class="calc-section-label">Инструмент</div>
-            <div class="calc-grid-2">
-              <div class="calc-group">
-                <label class="calc-label" for="cc-diam">Диаметр D (мм)</label>
-                <input class="calc-input" type="number" id="cc-diam" value="10" min="0.1" step="0.1">
-              </div>
-              <div class="calc-group">
-                <label class="calc-label" for="cc-teeth">Число зубьев z</label>
-                <input class="calc-input" type="number" id="cc-teeth" value="4" min="1" step="1">
-              </div>
-            </div>
-
-            <div class="calc-section-label" style="margin-top:16px">Материал и скорость</div>
-            <div class="calc-group">
-              <label class="calc-label" for="cc-material">Материал заготовки</label>
-              <select class="calc-input" id="cc-material">
-                <option value="custom">Ввести Vc вручную</option>
-                <optgroup label="Сталь">
-                  <option value="60">Конструкционная сталь (45, 40Х) — Vc ≈ 60</option>
-                  <option value="40">Нержавейка 304/316 — Vc ≈ 40</option>
-                  <option value="30">Инструментальная сталь (Д2, М2) — Vc ≈ 30</option>
-                </optgroup>
-                <optgroup label="Цветные металлы">
-                  <option value="200">Алюминий (6061, 7075) — Vc ≈ 200</option>
-                  <option value="80">Медь / Латунь — Vc ≈ 80</option>
-                  <option value="50">Титан ВТ6 — Vc ≈ 50</option>
-                </optgroup>
-                <optgroup label="Прочее">
-                  <option value="400">Пластик / Оргстекло — Vc ≈ 400</option>
-                  <option value="25">Чугун СЧ — Vc ≈ 25</option>
-                </optgroup>
-              </select>
-            </div>
-            <div class="calc-group" id="cc-vc-group">
-              <label class="calc-label" for="cc-vc">Скорость резания Vc (м/мин)</label>
-              <input class="calc-input" type="number" id="cc-vc" value="60" min="1" step="1">
-            </div>
-
-            <div class="calc-section-label" style="margin-top:16px">Подача на зуб</div>
-            <div class="calc-grid-2">
-              <div class="calc-group">
-                <label class="calc-label" for="cc-fz">fz (мм/зуб)</label>
-                <input class="calc-input" type="number" id="cc-fz" value="0.02" min="0.001" step="0.001">
-              </div>
-              <div class="calc-group">
-                <label class="calc-label" for="cc-ae">Ширина резания ae (мм)</label>
-                <input class="calc-input" type="number" id="cc-ae" value="5" min="0.1" step="0.1">
-              </div>
-            </div>
-            <div class="calc-grid-2">
-              <div class="calc-group">
-                <label class="calc-label" for="cc-ap">Глубина резания ap (мм)</label>
-                <input class="calc-input" type="number" id="cc-ap" value="2" min="0.01" step="0.1">
-              </div>
-              <div class="calc-group">
-                <label class="calc-label" for="cc-kc">Уд. сила резания kc (Н/мм²)</label>
-                <input class="calc-input" type="number" id="cc-kc" value="2000" min="100" step="100">
-              </div>
-            </div>
-
-            <button class="gen-btn" id="cc-calc-btn" style="margin-top:16px">Рассчитать</button>
-          </div>
-
-          <!-- Results -->
-          <div class="calc-results" id="cc-results">
-            <div class="calc-result-placeholder">
-              <span style="font-size:2rem;opacity:.4">⚙️</span>
-              <span>Заполни параметры и нажми «Рассчитать»</span>
-            </div>
-          </div>
-        </div>
-      </section>
 
     </main>
   </div>
