@@ -1041,3 +1041,43 @@ function escapeRegex(str) {
     init();
   }
 })();
+
+// ─── FAQ Accordion + Header Button ──────────────────────────────────────────
+(function () {
+  // Аккордеон
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const answer = btn.nextElementSibling;
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+      // Закрываем все в той же категории
+      const category = btn.closest('.faq-category');
+      category.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded', 'false');
+        b.nextElementSibling.classList.remove('is-open');
+      });
+
+      // Открываем этот если был закрыт
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded', 'true');
+        answer.classList.add('is-open');
+      }
+    });
+  });
+
+  // Кнопка FAQ в хедере
+  const faqBtn = document.getElementById('faqHeaderBtn');
+  const faqSection = document.getElementById('faq');
+  if (!faqBtn || !faqSection) return;
+
+  let faqVisible = false;
+
+  faqBtn.addEventListener('click', () => {
+    faqVisible = !faqVisible;
+    faqBtn.classList.toggle('active', faqVisible);
+    faqSection.style.display = faqVisible ? '' : 'none';
+    if (faqVisible) {
+      faqSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+})();

@@ -57,13 +57,19 @@
       </div>
 
 
-      <!-- MODE SWITCHER -->
-      <div class="mode-switcher" id="modeSwitcher" role="group" aria-label="Режим">
-        <button class="mode-btn active" data-mode="beginner" title="Только база — смена инструмента, нули, чеклист">
-          🟢 Тыкатель
-        </button>
-        <button class="mode-btn" data-mode="advanced" title="G/M коды, циклы, 5 осей, генератор">
-          🔵 Научился
+      <!-- MODE SWITCHER + FAQ -->
+      <div class="header-mode-row">
+        <div class="mode-switcher" id="modeSwitcher" role="group" aria-label="Режим">
+          <button class="mode-btn active" data-mode="beginner" title="Только база — смена инструмента, нули, чеклист">
+            🟢 Тыкатель
+          </button>
+          <button class="mode-btn" data-mode="advanced" title="G/M коды, циклы, 5 осей, генератор">
+            🔵 Научился
+          </button>
+        </div>
+        <button class="faq-header-btn" id="faqHeaderBtn" title="Частые вопросы">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          FAQ
         </button>
       </div>
 
@@ -1600,6 +1606,573 @@ M3 M8</code></pre>
         </div>
       </section>
 
+
+      <!-- ===== FAQ ===== -->
+      <section id="faq" class="content-section" data-mode="both" style="display:none">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          FAQ — частые вопросы оператора
+        </h2>
+        <p class="section-intro">Реальные вопросы с производства. Простые ответы — без лишней теории.</p>
+
+        <!-- КАТЕГОРИЯ 1 -->
+        <div class="faq-category">
+          <div class="faq-cat-header">
+            <span class="faq-cat-icon">🔧</span>
+            <span class="faq-cat-title">Подготовка и наладка</span>
+            <span class="faq-cat-count">9 вопросов</span>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Что проверить в начале смены перед запуском станка?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Уровень масла, СОЖ, давление воздуха — по приборам на станке</li>
+                <li>Чистота рабочей зоны, стружкоуборка, защитные шторки</li>
+                <li>Нет ли посторонних предметов в зоне обработки</li>
+                <li>Отработка референтного хода (HOME) если станок был обесточен</li>
+                <li>Проверить таблицу коррекций — не менял ли кто в ночную смену</li>
+                <li>Прогрев шпинделя по циклу станка (обычно 5–10 минут) если долгий простой</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Что обязательно проверить перед запуском новой программы или новой детали?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Правильное имя и версия программы в стойке (путаница версий — частая причина брака)</li>
+                <li>Нулевые точки G54–G59 соответствуют карте наладки</li>
+                <li>Инструменты по номерам совпадают с картой: тип, диаметр, вылет</li>
+                <li>Коррекции длины и радиуса инструментов введены и не нулевые там, где не должны быть</li>
+                <li>Заготовка зажата правильно, упоры и базы как по карте</li>
+                <li>Первый запуск — только с подачей 5–10% и рукой на «Стоп»</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Когда делать «сухой прогон» и как понять, что его достаточно?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p><strong>Когда обязательно:</strong> новая программа впервые, после правок в программе, после смены оснастки или базирования, после долгого простоя станка.</p>
+              <p><strong>Как делать:</strong> подними Z на 50–100 мм выше детали (смещением нуля по Z или функцией «приподнять» на стойке), запусти на 5% подачи, проверь что траектория не цепляет зажимы и деталь. Потом — первый проход с подачей 10–20% и рукой у «Стоп».</p>
+              <p><strong>Достаточно когда:</strong> ты видел все переходы, все смены инструмента прошли нормально, нет подозрительных сближений с оснасткой.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Кто задаёт рабочие нули (G54–G59) и что оператор может сам корректировать?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p><strong>Задаёт наладчик/технолог</strong> — при первой наладке операции. Записывается в карту наладки.</p>
+              <p><strong>Оператор может:</strong> корректировать нуль в пределах ±0.1–0.5 мм для подстройки по результату первой детали (если это предусмотрено картой).</p>
+              <p><strong>Оператор не должен:</strong> менять нуль «на глазок» без измерения, менять систему нулей (G54 на G55), переписывать нули без записи в журнал.</p>
+              <div class="faq-warn">⚠️ Любое изменение нуля — записать в журнал. Иначе следующая смена получит брак и не поймёт почему.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Как убедиться, что оснастка, тиски и приспособления установлены правильно?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Индикатором проверить параллельность/перпендикулярность губок тисков столу (допуск — по карте, обычно 0.02–0.05 мм)</li>
+                <li>Все болты и гайки затянуты с нужным моментом (не «на руку»)</li>
+                <li>Заготовка опирается на все три базовые точки, нет качания</li>
+                <li>После зажима — тихонько стукни деталь молотком через прокладку: не должна сдвинуться</li>
+                <li>Упоры стоят как по чертежу приспособления, не заменены на «что было под рукой»</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Что проверить после ремонта станка или долгого простоя?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Геометрия станка — биение шпинделя, перпендикулярность осей (ремонтник должен дать протокол)</li>
+                <li>Все параметры станка на месте — бэкап параметров сравнить с эталонным</li>
+                <li>Коррекции инструментов и нули — проверить по эталонной детали или контрольному образцу</li>
+                <li>Прогрев шпинделя по расширенному циклу (15–30 мин)</li>
+                <li>Первую деталь — обязательно промерить полностью по карте контроля</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              В каких случаях нужно остановить наладку и позвать механика?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Необычные звуки или вибрация от шпинделя, приводов, направляющих</li>
+                <li>Тепло от шпинделя или осей больше обычного</li>
+                <li>Люфт в осях, который раньше не наблюдался</li>
+                <li>Масло или СОЖ текут не туда, где должны</li>
+                <li>Повторяющиеся аларм-коды которые не исчезают после перезапуска</li>
+                <li>После столкновения — <strong>даже если «кажется всё нормально»</strong></li>
+              </ul>
+              <div class="faq-warn">⚠️ «Дотянуть до конца смены» после столкновения — самая дорогая ошибка. Скрытые повреждения шпинделя проявляются через 2–3 часа работы, и ремонт тогда в разы дороже.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Что сделать перед первым запуском после переналадки?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ol class="faq-ol">
+                <li>Сверить программу — имя, версия, последнее изменение</li>
+                <li>Промерить вылет каждого нового инструмента, записать в таблицу коррекций</li>
+                <li>Проверить нуль детали по базовой поверхности</li>
+                <li>Сухой прогон без детали</li>
+                <li>Первый запуск с заготовкой на подаче 10%, рука на «Стоп»</li>
+                <li>Промер первой детали — 100% размеров по карте контроля</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Как правильно базировать и зажимать заготовку — основные правила
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Правило 3-2-1: основная плоскость — 3 точки, направляющая — 2, упор — 1</li>
+                <li>Базовые поверхности должны быть чистыми — стружка под деталью = смещение нуля и брак</li>
+                <li>Зажим — после установки на базы, не наоборот</li>
+                <li>Усилие зажима: достаточно чтобы деталь не сдвинулась от сил резания, но не так чтобы деформировать заготовку</li>
+                <li>Тонкостенные детали — обязательно поддержка снизу, иначе вибрация и брак по шероховатости</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- КАТЕГОРИЯ 2 -->
+        <div class="faq-category">
+          <div class="faq-cat-header">
+            <span class="faq-cat-icon">🔩</span>
+            <span class="faq-cat-title">Инструмент и режимы</span>
+            <span class="faq-cat-count">8 вопросов</span>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Кто подбирает инструмент и режимы — технолог или оператор?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p><strong>Технолог/программист</strong> — выбирает тип инструмента, марку, геометрию, задаёт базовые режимы (Vc, fz, ap, ae) в карте наладки и программе.</p>
+              <p><strong>Оператор-наладчик</strong> — контролирует соответствие реального инструмента карте, вводит коррекции, следит за износом, корректирует подачу в разумных пределах если что-то пошло не так.</p>
+              <div class="faq-warn">💡 Если реального инструмента нет и ты хочешь поставить «похожий» — согласуй с технологом. Самодеятельность здесь приводит к браку или поломке.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Что сверить по инструменту перед запуском?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Номер позиции совпадает с картой наладки</li>
+                <li>Тип и диаметр инструмента правильные</li>
+                <li>Вылет инструмента — промерен и занесён в таблицу коррекций</li>
+                <li>Пластины/режущая часть — без сколов и явного износа</li>
+                <li>Инструмент нормально затянут в державке, биение проверено (если есть индикатор)</li>
+                <li>Коррекция радиуса введена если используется (G41/G42)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Как часто и по каким признакам контролировать износ инструмента?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p><strong>По регламенту:</strong> периодичность замены — в карте наладки (обычно по числу деталей или минутам резания).</p>
+              <p><strong>Внеплановая проверка если:</strong></p>
+              <ul class="faq-list">
+                <li>Звук обработки изменился — стал более низким, появился скрип</li>
+                <li>Размер начал «плыть» в одну сторону (инструмент изнашивается — деталь растёт или уменьшается)</li>
+                <li>Шероховатость резко ухудшилась</li>
+                <li>Стружка стала другой — длиннее, другого цвета, налипает на инструмент</li>
+                <li>Нагрузка на шпиндель выросла на 20–30% от обычной</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              В каких пределах можно корректировать подачу и обороты во время работы?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p><strong>Допустимо:</strong> снизить подачу до 80–100% от программной при первой детали, если что-то настораживает. Поднять до 110–120% если всё стабильно, материал идёт хорошо и карта это допускает.</p>
+              <p><strong>Нельзя:</strong> задирать обороты выше ограничения инструмента (написано на хвостовике или в каталоге), снижать обороты настолько что инструмент «тупит» — это хуже, чем быстро.</p>
+              <div class="faq-warn">💡 Любые финальные режимы, которые прижились — записать в карту наладки. Иначе следующая смена начнёт заново.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              После смены пластины или фрезы размер сразу «уплыл» на несколько соток — почему и что делать?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p><strong>Причины:</strong></p>
+              <ul class="faq-list">
+                <li>Новая пластина имеет другую геометрию посадки — нормально, нужно корректировать коррекцию</li>
+                <li>Пластина не до конца дожата в гнезде — вытащи, протри гнездо, установи снова</li>
+                <li>Новая фреза — другой реальный диаметр или вылет</li>
+                <li>Остатки стружки под пластиной (частая причина!)</li>
+              </ul>
+              <p><strong>Действие:</strong> промерь деталь, посчитай отклонение, введи корректирующий износный офсет. Не меняй геометрическую коррекцию — только износную (W или H offset зависимость от стойки).</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Типичные причины вибрации, воя и плохой шероховатости
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <table class="faq-table">
+                <thead><tr><th>Симптом</th><th>Частая причина</th><th>Что делать</th></tr></thead>
+                <tbody>
+                  <tr><td>Вой/свист при обработке</td><td>Резонанс — слишком большой вылет фрезы или скорость</td><td>Снизь обороты на 10–15%, укороти вылет если можно</td></tr>
+                  <tr><td>Дребезг, «чатер»</td><td>Слабый зажим заготовки или вибрация оснастки</td><td>Проверь зажим, добавь поддержку снизу</td></tr>
+                  <tr><td>Шероховатость хуже нормы</td><td>Тупой инструмент, высокая подача на зуб, биение фрезы</td><td>Смени инструмент, проверь биение, снизь fz</td></tr>
+                  <tr><td>Задиры на поверхности</td><td>Наростообразование — слишком низкая скорость для данного материала</td><td>Подними Vc, улучши подачу СОЖ</td></tr>
+                  <tr><td>Надиры и риски</td><td>Стружка не уходит, налипает, режется повторно</td><td>Усиль обдув/СОЖ, смени стратегию (попутное/встречное)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Как правильно вносить и изменять коррекции инструмента?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li><strong>Геометрическая коррекция (H, длина)</strong> — меняется только при замене инструмента или после промера на приборе. Не трогай «для подстройки».</li>
+                <li><strong>Износная коррекция (W, D)</strong> — именно её используй для подстройки размера в серии</li>
+                <li>Считай правильно: деталь больше нужного → нужно убрать металл → коррекция в минус (для наружных поверхностей)</li>
+                <li>Вноси изменения небольшими шагами: 0.02–0.05 мм → промер → следующий шаг</li>
+                <li>Записывай все изменения — текущее значение и что поменял</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Как зафиксировать финальные режимы после доводки первой детали?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Распечатать или записать все коррекции из таблицы стойки (скриншот экрана — быстро и надёжно)</li>
+                <li>Записать фактические обороты и подачи если они отличаются от программных</li>
+                <li>Вложить в карту наладки операции</li>
+                <li>Передать сменщику устно + в журнале</li>
+                <li>Если программа правилась — передать технологу исправленную версию, не работать по «своей» копии бесконтрольно</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- КАТЕГОРИЯ 3 -->
+        <div class="faq-category">
+          <div class="faq-cat-header">
+            <span class="faq-cat-icon">📐</span>
+            <span class="faq-cat-title">Контроль размеров и качества</span>
+            <span class="faq-cat-count">8 вопросов</span>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Какие размеры контролировать на 100%, а какие выборочно?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p><strong>100% контроль (каждая деталь):</strong> размеры по карте контроля с пометкой «100%», критические посадочные поверхности, первая и последняя деталь партии.</p>
+              <p><strong>Выборочно (по карте контроля):</strong> остальные размеры с указанной периодичностью — например каждые 5, 10 деталей.</p>
+              <p><strong>Усилить контроль если:</strong> смена инструмента, смена заготовки (другая партия материала), нестабильная шероховатость, любые изменения в процессе.</p>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Как читать допуски на чертеже и где граница брака?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p><strong>Размер 25 +0.021/0:</strong> допустимо 25.000 до 25.021. Меньше 25.000 — брак. Больше 25.021 — брак.</p>
+              <p><strong>Размер 25 ±0.1:</strong> допустимо 24.900 до 25.100.</p>
+              <p><strong>Практическое правило:</strong> не доводи деталь до самой границы. Держи в середине поля допуска ± треть поля — это зона комфорта. Если размер ближе чем треть поля допуска к границе — пора корректировать коррекцию, не жди брака.</p>
+              <div class="faq-warn">💡 Нет допуска на чертеже → смотри в общих технических требованиях чертежа, обычно IT12–IT14 по ГОСТ.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Как часто измерять детали в серии?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Первая деталь — 100% промер</li>
+                <li>Далее — по карте контроля (обычно каждые 5–20 деталей в зависимости от стабильности)</li>
+                <li>После каждой смены инструмента — промер сразу</li>
+                <li>Если размер начал «плыть» — участить до 100%</li>
+                <li>После перерыва в работе (обед, конец смены, остановка станка) — промер первой детали после перезапуска</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Размер приближается к границе допуска, но ещё годен — что делать?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p>Не жди пока выйдет за допуск. Действуй сразу:</p>
+              <ol class="faq-ol">
+                <li>Определи тренд: размер уходит стабильно в одну сторону (износ инструмента) или скачет (нестабильный зажим, биение)</li>
+                <li>Если монотонный уход — введи корректирующий износный офсет (маленький шаг, 0.02–0.05 мм)</li>
+                <li>Промерь следующую деталь — убедись что размер вернулся к середине поля</li>
+                <li>Если скачет — ищи нестабильность: зажим, биение, стружка под деталью</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Размер гуляет от детали к детали при нормальном инструменте — почему?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <p>Нестабильность размера при нормальном инструменте — почти всегда причина в базировании или зажиме:</p>
+              <ul class="faq-list">
+                <li>Стружка попадает под деталь между деталями — чисти каждую установку</li>
+                <li>Непостоянное усилие зажима (ручной зажим «на силу руки»)</li>
+                <li>Деталь «садится» по-разному на базовые поверхности — заусенцы на заготовке</li>
+                <li>Тепловой дрейф станка — первые детали после прогрева имеют другой размер</li>
+                <li>Разброс в партии заготовок — разный материал, разный припуск</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Как правильно использовать коррекции для подведения размера?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Используй только <strong>износную (W/D) коррекцию</strong>, не геометрическую</li>
+                <li>Наружный диаметр/стенка больше → коррекция в «–» (убираем металл)</li>
+                <li>Отверстие меньше → коррекция в «+» (расширяем)</li>
+                <li>Вноси изменения пошагово: не более половины отклонения за один шаг</li>
+                <li>После каждого изменения — промер детали, потом следующий шаг</li>
+              </ul>
+              <div class="faq-warn">⚠️ Не кидайся сразу вносить всё отклонение — можно перескочить в другую сторону и получить брак.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Что делать с бракованной деталью?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ol class="faq-ol">
+                <li>Отложить отдельно, пометить ярлыком «БРАК» — не смешивать с годными</li>
+                <li>Записать: номер детали, операция, размер, фактическое значение, причина если ясна</li>
+                <li>Уведомить мастера/технолога</li>
+                <li>Не пытаться «исправить» брак самому без согласования</li>
+                <li>Понять причину прежде чем продолжать серию — иначе следующие детали тоже в брак</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Какой инструмент измерения применять на операции?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <table class="faq-table">
+                <thead><tr><th>Что меряем</th><th>Инструмент</th><th>Точность</th></tr></thead>
+                <tbody>
+                  <tr><td>Наружные размеры ±0.1 и грубее</td><td>Штангенциркуль</td><td>0.05–0.1 мм</td></tr>
+                  <tr><td>Наружные размеры точнее ±0.05</td><td>Микрометр</td><td>0.01 мм</td></tr>
+                  <tr><td>Отверстия точные (H7 и точнее)</td><td>Нутромер индикаторный или трёхточечный</td><td>0.001–0.01 мм</td></tr>
+                  <tr><td>Биение, плоскостность</td><td>Индикатор ИЧ на стойке</td><td>0.001–0.01 мм</td></tr>
+                  <tr><td>Резьба</td><td>Резьбовые калибры (пробки, кольца)</td><td>годен/не годен</td></tr>
+                  <tr><td>Шероховатость</td><td>Образцы шероховатости или профилометр</td><td>визуально или Ra</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- КАТЕГОРИЯ 4 -->
+        <div class="faq-category">
+          <div class="faq-cat-header">
+            <span class="faq-cat-icon">🚨</span>
+            <span class="faq-cat-title">Аварии и ошибки</span>
+            <span class="faq-cat-count">7 вопросов</span>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Какие признаки надвигающейся аварии надо знать?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Нагрузка на шпиндель резко выросла (следи за монитором нагрузки)</li>
+                <li>Звук стал другим — глухой удар, скрежет, нерегулярные щелчки</li>
+                <li>Инструмент «жуёт» а не режет — размер уходит быстро</li>
+                <li>Координата одной из осей неожиданно изменилась (сбой нуля)</li>
+                <li>Заготовка сдвинулась в зажиме — слышно стук или видно визуально</li>
+                <li>Стружка длинная, не ломается, наматывается</li>
+              </ul>
+              <div class="faq-warn">⚠️ При любом из этих признаков — <strong>немедленно нажми «Подача Стоп»</strong>, не дожидайся конца прохода.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Порядок действий при столкновении или аварийной остановке
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ol class="faq-ol">
+                <li><strong>E-Stop или «Подача Стоп»</strong> — сразу</li>
+                <li>Не трогай оси, не пытайся «вытащить» инструмент вручную двигая по G-коду</li>
+                <li>Запиши номер аларма, название, время, на каком кадре произошло</li>
+                <li>Сфотографируй экран стойки</li>
+                <li>Вызови мастера/технолога — до его прихода ничего не меняй</li>
+                <li>Осмотр: видимые повреждения инструмента, оснастки, шпинделя</li>
+                <li>После осмотра — решение принимает мастер, не оператор</li>
+              </ol>
+              <div class="faq-warn">🚨 <strong>Никогда не пытайся самостоятельно отвести оси после столкновения</strong> — можно усугубить повреждения или потерять положение нуля.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Самые частые ошибки при наладке которые приводят к авариям
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <table class="faq-table">
+                <thead><tr><th>Ошибка</th><th>Последствие</th></tr></thead>
+                <tbody>
+                  <tr><td>Нуль по Z записан не на верхнюю плоскость детали, а куда попало</td><td>Врезание в деталь или стол</td></tr>
+                  <tr><td>Коррекция длины инструмента не введена (0 или пустая)</td><td>Инструмент не знает где Z=0, врезание</td></tr>
+                  <tr><td>Перепутаны G54 и G55 (записал в одну, вызвал другую)</td><td>Обработка со смещением на всю величину разницы</td></tr>
+                  <tr><td>Знак коррекции длины неправильный (+ вместо –)</td><td>Инструмент уходит в противоположную сторону</td></tr>
+                  <tr><td>Не выполнен G80 после цикла сверления (Fanuc)</td><td>Незапланированное сверление на следующем перемещении</td></tr>
+                  <tr><td>Запуск на 100% подаче без проверки первой детали</td><td>Брак или столкновение при ошибке в программе</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Какие аварии критические — нельзя продолжать, нужен ремонт?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Столкновение инструмента с деталью, оснасткой или столом — <strong>даже если «ничего не видно»</strong></li>
+                <li>Поломка инструмента с ударом по шпинделю</li>
+                <li>Вырыв детали из зажима</li>
+                <li>Аномальные звуки из шпиндельного узла после любого инцидента</li>
+                <li>Аларм по перегрузке оси или шпинделя</li>
+                <li>Деформация оснастки или стола</li>
+              </ul>
+              <div class="faq-warn">🚨 После любого из этих событий <strong>станок не запускается</strong> до осмотра механика. «Вроде работает» — не аргумент.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Как документировать ошибку или аварию?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li><strong>Сразу:</strong> фото экрана стойки с аларм-кодом</li>
+                <li>Записать: время, станок, программа, номер кадра, операция, инструмент</li>
+                <li>Описать что происходило перед аварией (что делал, что менял)</li>
+                <li>Записать в журнал смены</li>
+                <li>Устно передать мастеру и следующей смене</li>
+              </ul>
+              <div class="faq-warn">💡 Хорошее описание аварии экономит часы диагностики. Плохое описание — «оно само» — ни о чём не говорит.</div>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Что категорически нельзя делать после столкновения?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Двигать оси в ручном режиме «чтобы вытащить инструмент» без понимания геометрии столкновения</li>
+                <li>Запускать программу снова «проверить не повторится ли»</li>
+                <li>Скрывать аварию — это вопрос безопасности, не только экономики</li>
+                <li>Самостоятельно «подправить» погнутый инструмент молотком</li>
+                <li>Менять нули или коррекции до фиксации их текущих значений</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="faq-item">
+            <button class="faq-q" aria-expanded="false">
+              Профилактика: как минимизировать риск аварий каждый день?
+              <svg class="faq-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-a">
+              <ul class="faq-list">
+                <li>Чек-лист перед каждым запуском — не по памяти, а по листу</li>
+                <li>Сухой прогон при любых изменениях программы или наладки</li>
+                <li>Первая деталь — подача 10%, рука на «Стоп»</li>
+                <li>Двойная проверка нулей: записал → проверил индикатором точку → сравнил с картой</li>
+                <li>Не торопись. Лишние 5 минут на проверку = минус несколько часов ремонта</li>
+                <li>Передавай смену нормально: что было, что менял, что настораживало</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </section>
 
       <section id="checklist" class="content-section" data-mode="both">
         <h2 class="section-title checklist-title">
