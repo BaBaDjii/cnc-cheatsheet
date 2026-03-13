@@ -1251,10 +1251,25 @@ END PGM TILT5AX MM</code></pre>
 
             <div class="gen-group">
               <label class="gen-label">Система ЧПУ</label>
-              <div class="gen-radio-group" id="genSystem">
-                <label class="gen-radio active"><input type="radio" name="genSys" value="fanuc" checked> <span>Fanuc</span></label>
-                <label class="gen-radio"><input type="radio" name="genSys" value="siemens"> <span>Siemens</span></label>
-                <label class="gen-radio"><input type="radio" name="genSys" value="heidenhain"> <span>Heidenhain</span></label>
+              <div class="gen-sys-group" id="genSystem">
+                <input type="radio" name="genSys" id="gs-fanuc" value="fanuc" checked>
+                <label for="gs-fanuc" class="gen-sys-btn gs-fanuc">
+                  <span class="gs-dot"></span>
+                  <span class="gs-name">Fanuc</span>
+                  <span class="gs-sub">0i / 30i / 31i</span>
+                </label>
+                <input type="radio" name="genSys" id="gs-siemens" value="siemens">
+                <label for="gs-siemens" class="gen-sys-btn gs-siemens">
+                  <span class="gs-dot"></span>
+                  <span class="gs-name">Siemens</span>
+                  <span class="gs-sub">840D sl / 828D</span>
+                </label>
+                <input type="radio" name="genSys" id="gs-heidenhain" value="heidenhain">
+                <label for="gs-heidenhain" class="gen-sys-btn gs-heidenhain">
+                  <span class="gs-dot"></span>
+                  <span class="gs-name">Heidenhain</span>
+                  <span class="gs-sub">TNC 640 / iTNC 530</span>
+                </label>
               </div>
             </div>
 

@@ -1182,21 +1182,83 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
   color: var(--text-secondary, #9ca3af);
 }
 
+/* ── System selector (generator) ── */
+.gen-sys-group {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.gen-sys-group input[type="radio"] { display: none; }
+
+.gen-sys-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 8px 10px;
+  border-radius: 10px;
+  border: 2px solid var(--border, #2e2c28);
+  background: var(--surface-1, #141312);
+  cursor: pointer;
+  transition: border-color .15s, background .15s, transform .1s;
+  text-align: center;
+  user-select: none;
+}
+.gen-sys-btn:hover { border-color: #555; transform: translateY(-1px); }
+
+.gs-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--border, #444);
+  transition: background .15s, box-shadow .15s;
+}
+.gs-name {
+  font-size: .875rem;
+  font-weight: 700;
+  color: var(--text-secondary, #9ca3af);
+  transition: color .15s;
+  line-height: 1;
+}
+.gs-sub {
+  font-size: .68rem;
+  color: var(--text-tertiary, #6b7280);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Fanuc selected */
+#gs-fanuc:checked + .gen-sys-btn {
+  border-color: #3b8fe8;
+  background: rgba(59,143,232,.13);
+}
+#gs-fanuc:checked + .gen-sys-btn .gs-dot  { background: #3b8fe8; box-shadow: 0 0 6px rgba(59,143,232,.6); }
+#gs-fanuc:checked + .gen-sys-btn .gs-name { color: #3b8fe8; }
+
+/* Siemens selected */
+#gs-siemens:checked + .gen-sys-btn {
+  border-color: #f08c00;
+  background: rgba(240,140,0,.13);
+}
+#gs-siemens:checked + .gen-sys-btn .gs-dot  { background: #f08c00; box-shadow: 0 0 6px rgba(240,140,0,.6); }
+#gs-siemens:checked + .gen-sys-btn .gs-name { color: #f08c00; }
+
+/* Heidenhain selected */
+#gs-heidenhain:checked + .gen-sys-btn {
+  border-color: #2db37a;
+  background: rgba(45,179,122,.13);
+}
+#gs-heidenhain:checked + .gen-sys-btn .gs-dot  { background: #2db37a; box-shadow: 0 0 6px rgba(45,179,122,.6); }
+#gs-heidenhain:checked + .gen-sys-btn .gs-name { color: #2db37a; }
+
+/* Legacy (keep for safety) */
 .gen-radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
 .gen-radio input[type="radio"] { display: none; }
 .gen-radio label {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 20px;
+  display: inline-block; padding: 6px 14px; border-radius: 20px;
   border: 1.5px solid var(--border, #2e2c28);
   font-size: .82rem; font-weight: 600; cursor: pointer;
-  transition: all .15s;
-  color: var(--text-secondary, #9ca3af);
+  transition: all .15s; color: var(--text-secondary, #9ca3af);
 }
-.gen-radio label:hover { border-color: #888; color: var(--text-primary, #f0ede6); }
-.gen-radio input[value="fanuc"]:checked + label  { border-color: #3b8fe8; color: #3b8fe8; background: rgba(59,143,232,.12); }
-.gen-radio input[value="siemens"]:checked + label { border-color: #f08c00; color: #f08c00; background: rgba(240,140,0,.12); }
-.gen-radio input[value="heidenhain"]:checked + label { border-color: #2db37a; color: #2db37a; background: rgba(45,179,122,.12); }
 
 .gen-select, .gen-input {
   width: 100%;
