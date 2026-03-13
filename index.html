@@ -1,0 +1,1172 @@
+<!--
+   ______                            __
+  / ____/___  ____ ___  ____  __  __/ /____  _____
+ / /   / __ \/ __ `__ \/ __ \/ / / / __/ _ \/ ___/
+/ /___/ /_/ / / / / / / /_/ / /_/ / /_/  __/ /
+\____/\____/_/ /_/ /_/ .___/\__,_/\__/\___/_/
+                    /_/
+        Created with Perplexity Computer
+        https://www.perplexity.ai/computer
+-->
+
+<!-- Perplexity Computer Attribution — SEO Meta Tags -->
+<meta name="generator" content="Perplexity Computer">
+<meta name="author" content="Perplexity Computer">
+<meta property="og:see_also" content="https://www.perplexity.ai/computer">
+<link rel="author" href="https://www.perplexity.ai/computer">
+<!DOCTYPE html>
+<html lang="ru" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNC Шпаргалка — Fanuc / Siemens / Heidenhain</title>
+  <meta name="description" content="Интерактивная шпаргалка по различиям Fanuc, Siemens и Heidenhain: циклы, смещения, G/M-коды, нули, опасные различия">
+
+  <!-- Fonts: JetBrains Mono + General Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#141412">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="CNC">
+  <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo" aria-label="CNC Шпаргалка">
+        <svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="32" height="32" rx="6" stroke="currentColor" stroke-width="2"/>
+          <circle cx="18" cy="18" r="7" stroke="currentColor" stroke-width="2"/>
+          <circle cx="18" cy="18" r="2.5" fill="currentColor"/>
+          <line x1="18" y1="2" x2="18" y2="11" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="18" y1="25" x2="18" y2="34" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="2" y1="18" x2="11" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          <line x1="25" y1="18" x2="34" y2="18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span class="logo-text">CNC <span class="logo-accent">Шпаргалка</span></span>
+      </div>
+
+      <div class="header-search">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="globalSearch" placeholder="Поиск по всем разделам…" autocomplete="off" spellcheck="false">
+        <kbd>Ctrl+K</kbd>
+      </div>
+
+      <div class="header-actions">
+        <div class="brand-filters" role="group" aria-label="Фильтр по системе">
+          <button class="brand-btn fanuc active" data-brand="fanuc">Fanuc</button>
+          <button class="brand-btn siemens active" data-brand="siemens">Siemens</button>
+          <button class="brand-btn heidenhain active" data-brand="heidenhain">Heidenhain</button>
+        </div>
+        <button class="theme-toggle" data-theme-toggle aria-label="Переключить тему">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SEARCH RESULTS OVERLAY -->
+  <div id="searchResults" class="search-overlay" hidden>
+    <div class="search-results-inner" id="searchResultsList"></div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="app-layout">
+
+    <!-- SIDEBAR NAV -->
+    <nav class="sidebar" aria-label="Разделы">
+      <ul role="list">
+        <li><a href="#g-codes" class="nav-link active">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          G-коды
+        </a></li>
+        <li><a href="#m-codes" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          M-коды
+        </a></li>
+        <li><a href="#cycles" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Циклы
+        </a></li>
+        <li><a href="#offsets" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Смещения и нули
+        </a></li>
+        <li><a href="#tool-correction" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          Коррекция инструмента
+        </a></li>
+        <li><a href="#zero-points" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Работа с нулями
+        </a></li>
+        <li><a href="#dangerous" class="nav-link danger-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Опасные различия
+        </a></li>
+        <li><a href="#programs" class="nav-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Примеры программ
+        </a></li>
+        <li><a href="#checklist" class="nav-link checklist-link">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Чеклист запуска
+        </a></li>
+      </ul>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+      <!-- LEGEND -->
+      <div class="brand-legend">
+        <span class="legend-item fanuc">
+          <span class="legend-dot"></span>Fanuc (0i, 30i, 31i)
+        </span>
+        <span class="legend-item siemens">
+          <span class="legend-dot"></span>Siemens (840D sl / 828D)
+        </span>
+        <span class="legend-item heidenhain">
+          <span class="legend-dot"></span>Heidenhain (TNC 640 / iTNC 530)
+        </span>
+      </div>
+
+      <!-- ===== G-КОДЫ ===== -->
+      <section id="g-codes" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          G-коды
+        </h2>
+
+        <div class="table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Функция</th>
+                <th class="fanuc-col">Fanuc</th>
+                <th class="siemens-col">Siemens</th>
+                <th class="heidenhain-col">Heidenhain</th>
+                <th>Примечание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Быстрое перемещение</td>
+                <td class="fanuc-col"><code>G00</code></td>
+                <td class="siemens-col"><code>G0</code></td>
+                <td class="heidenhain-col"><code>L ... FMAX</code></td>
+                <td>Heidenhain: макс. скорость через FMAX</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Линейная интерполяция</td>
+                <td class="fanuc-col"><code>G01</code></td>
+                <td class="siemens-col"><code>G1</code></td>
+                <td class="heidenhain-col"><code>L ... F...</code></td>
+                <td>Heidenhain: команда L с подачей</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Дуга по часовой</td>
+                <td class="fanuc-col"><code>G02</code></td>
+                <td class="siemens-col"><code>G2</code></td>
+                <td class="heidenhain-col"><code>C ... DR-</code></td>
+                <td>Heidenhain: DR- = CW, DR+ = CCW</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Дуга против часовой</td>
+                <td class="fanuc-col"><code>G03</code></td>
+                <td class="siemens-col"><code>G3</code></td>
+                <td class="heidenhain-col"><code>C ... DR+</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Точная остановка</td>
+                <td class="fanuc-col"><code>G09</code></td>
+                <td class="siemens-col"><code>G9</code></td>
+                <td class="heidenhain-col"><code>L ... M99</code></td>
+                <td>Heidenhain: M99 — точная позиция</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Плоскость XY</td>
+                <td class="fanuc-col"><code>G17</code></td>
+                <td class="siemens-col"><code>G17</code></td>
+                <td class="heidenhain-col">авто по оси инструмента</td>
+                <td>Heidenhain определяет автоматически</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Плоскость XZ</td>
+                <td class="fanuc-col"><code>G18</code></td>
+                <td class="siemens-col"><code>G18</code></td>
+                <td class="heidenhain-col"><code>—</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Плоскость YZ</td>
+                <td class="fanuc-col"><code>G19</code></td>
+                <td class="siemens-col"><code>G19</code></td>
+                <td class="heidenhain-col"><code>—</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Дюймовый ввод</td>
+                <td class="fanuc-col"><code>G20</code></td>
+                <td class="siemens-col"><code>G70</code></td>
+                <td class="heidenhain-col">настройка в параметрах</td>
+                <td class="warn-cell">⚠ Разные коды!</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Метрический ввод</td>
+                <td class="fanuc-col"><code>G21</code></td>
+                <td class="siemens-col"><code>G71</code></td>
+                <td class="heidenhain-col">настройка в параметрах</td>
+                <td class="warn-cell">⚠ Разные коды!</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Возврат в нулевую точку</td>
+                <td class="fanuc-col"><code>G28</code></td>
+                <td class="siemens-col"><code>G74</code> / <code>SPOS</code></td>
+                <td class="heidenhain-col"><code>L ... M30</code> / цикл 9</td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Абсолютные координаты</td>
+                <td class="fanuc-col"><code>G90</code></td>
+                <td class="siemens-col"><code>G90</code></td>
+                <td class="heidenhain-col">по умолчанию</td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Инкрементальные координаты</td>
+                <td class="fanuc-col"><code>G91</code></td>
+                <td class="siemens-col"><code>G91</code></td>
+                <td class="heidenhain-col"><code>INC</code> / <code>I...</code></td>
+                <td>Heidenhain: префикс I перед осью</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Смещение нуля детали</td>
+                <td class="fanuc-col"><code>G54–G59</code></td>
+                <td class="siemens-col"><code>G54–G57</code>, <code>G505–G599</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 7</code> / таблица REF</td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Компенсация рад. инструм. влево</td>
+                <td class="fanuc-col"><code>G41</code></td>
+                <td class="siemens-col"><code>G41</code></td>
+                <td class="heidenhain-col"><code>RL</code></td>
+                <td>Heidenhain использует RL/RR/R0</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Компенсация рад. инструм. вправо</td>
+                <td class="fanuc-col"><code>G42</code></td>
+                <td class="siemens-col"><code>G42</code></td>
+                <td class="heidenhain-col"><code>RR</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Отмена компенсации рад.</td>
+                <td class="fanuc-col"><code>G40</code></td>
+                <td class="siemens-col"><code>G40</code></td>
+                <td class="heidenhain-col"><code>R0</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Компенсация длины +</td>
+                <td class="fanuc-col"><code>G43</code></td>
+                <td class="siemens-col">авто при вызове <code>T</code></td>
+                <td class="heidenhain-col">авто при вызове <code>TOOL CALL</code></td>
+                <td class="warn-cell">⚠ Fanuc требует явного G43!</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Постоянная скорость резания</td>
+                <td class="fanuc-col"><code>G96</code></td>
+                <td class="siemens-col"><code>G96</code></td>
+                <td class="heidenhain-col"><code>VCONT</code> / <code>SVC</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Обороты (об/мин)</td>
+                <td class="fanuc-col"><code>G97 S...</code></td>
+                <td class="siemens-col"><code>G97 S...</code></td>
+                <td class="heidenhain-col"><code>S... M03</code></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===== M-КОДЫ ===== -->
+      <section id="m-codes" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+          M-коды
+        </h2>
+
+        <div class="table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Функция</th>
+                <th class="fanuc-col">Fanuc</th>
+                <th class="siemens-col">Siemens</th>
+                <th class="heidenhain-col">Heidenhain</th>
+                <th>Примечание</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Конец программы + сброс</td>
+                <td class="fanuc-col"><code>M30</code></td>
+                <td class="siemens-col"><code>M30</code></td>
+                <td class="heidenhain-col"><code>END PGM</code></td>
+                <td>Heidenhain: обязательная строка</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Конец подпрограммы</td>
+                <td class="fanuc-col"><code>M99</code></td>
+                <td class="siemens-col"><code>RET</code></td>
+                <td class="heidenhain-col"><code>END PGM</code></td>
+                <td class="warn-cell">⚠ Полностью разные!</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Шпиндель по часовой</td>
+                <td class="fanuc-col"><code>M03</code></td>
+                <td class="siemens-col"><code>M3</code></td>
+                <td class="heidenhain-col"><code>M3</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Шпиндель против часовой</td>
+                <td class="fanuc-col"><code>M04</code></td>
+                <td class="siemens-col"><code>M4</code></td>
+                <td class="heidenhain-col"><code>M4</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Стоп шпинделя</td>
+                <td class="fanuc-col"><code>M05</code></td>
+                <td class="siemens-col"><code>M5</code></td>
+                <td class="heidenhain-col"><code>M5</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Смена инструмента</td>
+                <td class="fanuc-col"><code>M06</code> (после T)</td>
+                <td class="siemens-col"><code>M6</code> или авто с <code>T</code></td>
+                <td class="heidenhain-col"><code>TOOL CALL n</code></td>
+                <td class="warn-cell">⚠ Принцип смены разный!</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>СОЖ включить</td>
+                <td class="fanuc-col"><code>M08</code></td>
+                <td class="siemens-col"><code>M8</code></td>
+                <td class="heidenhain-col"><code>M8</code></td>
+                <td></td>
+              </tr>
+              <tr data="fanuc siemens heidenhain">
+                <td>СОЖ выключить</td>
+                <td class="fanuc-col"><code>M09</code></td>
+                <td class="siemens-col"><code>M9</code></td>
+                <td class="heidenhain-col"><code>M9</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Стоп с подтверждением</td>
+                <td class="fanuc-col"><code>M00</code></td>
+                <td class="siemens-col"><code>M0</code></td>
+                <td class="heidenhain-col"><code>STOP</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Опциональный стоп</td>
+                <td class="fanuc-col"><code>M01</code></td>
+                <td class="siemens-col"><code>M1</code></td>
+                <td class="heidenhain-col"><code>M1</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Ориентация шпинделя</td>
+                <td class="fanuc-col"><code>M19</code></td>
+                <td class="siemens-col"><code>SPOS=...</code></td>
+                <td class="heidenhain-col"><code>M19</code> (машинный)</td>
+                <td>Siemens: через адрес позиции</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Вызов подпрограммы</td>
+                <td class="fanuc-col"><code>M98 P...</code></td>
+                <td class="siemens-col"><code>CALL "имя"</code> / <code>имя</code></td>
+                <td class="heidenhain-col"><code>CALL PGM "путь"</code></td>
+                <td class="warn-cell">⚠ Синтаксис полностью разный!</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Зеркало по X</td>
+                <td class="fanuc-col"><code>G51.1 X0</code></td>
+                <td class="siemens-col"><code>MIRROR X0</code></td>
+                <td class="heidenhain-col"><code>MIRROR X</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Вращение системы координат</td>
+                <td class="fanuc-col"><code>G68</code></td>
+                <td class="siemens-col"><code>ROT</code> / <code>AROT</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 10</code></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===== ЦИКЛЫ ===== -->
+      <section id="cycles" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          Циклы сверления и фрезерования
+        </h2>
+
+        <div class="table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Цикл</th>
+                <th class="fanuc-col">Fanuc</th>
+                <th class="siemens-col">Siemens</th>
+                <th class="heidenhain-col">Heidenhain</th>
+                <th>Особенности</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Сверление простое</td>
+                <td class="fanuc-col"><code>G81</code></td>
+                <td class="siemens-col"><code>CYCLE81</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 200</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Сверление с выдержкой</td>
+                <td class="fanuc-col"><code>G82</code></td>
+                <td class="siemens-col"><code>CYCLE82</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 200</code> (Q211)</td>
+                <td>Heidenhain: выдержка задаётся параметром Q211</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Глубокое сверление (ступ.)</td>
+                <td class="fanuc-col"><code>G83</code></td>
+                <td class="siemens-col"><code>CYCLE83</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 203</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Нарезка резьбы метчиком</td>
+                <td class="fanuc-col"><code>G84</code></td>
+                <td class="siemens-col"><code>CYCLE84</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 206/207</code></td>
+                <td class="warn-cell">⚠ Параметры подачи/шага — разные!</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Расточка с выдержкой + стоп</td>
+                <td class="fanuc-col"><code>G86</code></td>
+                <td class="siemens-col"><code>CYCLE86</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 202</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Фрезерование отверстия</td>
+                <td class="fanuc-col">нет стандарта</td>
+                <td class="siemens-col"><code>CYCLE75</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 252</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Карманная обработка</td>
+                <td class="fanuc-col">нет стандарта</td>
+                <td class="siemens-col"><code>POCKET3/4</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 251/252</code></td>
+                <td></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Шаблон — ряд отверстий</td>
+                <td class="fanuc-col"><code>G70/G71</code> (ток.) / макрос</td>
+                <td class="siemens-col"><code>HOLES1/HOLES2</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 220/221</code></td>
+                <td>Fanuc: требует макропрограммирование</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Отмена цикла</td>
+                <td class="fanuc-col"><code>G80</code></td>
+                <td class="siemens-col">авто (однократный вызов)</td>
+                <td class="heidenhain-col">авто (цикл выполняется при CYCL CALL)</td>
+                <td class="warn-cell">⚠ Logique d'annulation différente</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Вызов цикла (позиция)</td>
+                <td class="fanuc-col">X... Y... (активный цикл выполняется)</td>
+                <td class="siemens-col">X... Y... или <code>MCALL</code></td>
+                <td class="heidenhain-col"><code>CYCL CALL</code> / <code>CYCL CALL PAT</code></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===== СМЕЩЕНИЯ И НУЛИ ===== -->
+      <section id="offsets" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Смещения и нули
+        </h2>
+
+        <div class="cards-grid">
+          <div class="info-card fanuc-card" data-brands="fanuc">
+            <div class="card-header">
+              <span class="brand-badge fanuc">Fanuc</span>
+              <h3>Смещения нуля детали</h3>
+            </div>
+            <div class="card-body">
+              <p>6 стандартных смещений: <strong>G54–G59</strong>. Расширенные: <strong>G54.1 P1–P48</strong> (или G54.1 P1–P300 в зависимости от опции).</p>
+              <p>Задаются через меню <em>OFFSET / WORK</em> или командой: <code>G10 L2 P1 X... Y... Z...</code></p>
+              <div class="code-block">
+                <div class="code-label">Пример</div>
+                <pre><code>G54          ; активировать смещение 1
+G10 L2 P1 X-120.5 Y-85.0 Z0 ; записать G54 из программы</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card siemens-card" data-brands="siemens">
+            <div class="card-header">
+              <span class="brand-badge siemens">Siemens</span>
+              <h3>Нулевые смещения (ZO)</h3>
+            </div>
+            <div class="card-body">
+              <p>G54–G57 + расширенные <strong>G505–G599</strong> (FRAME-функции). Программируются через <code>TRANS/ATRANS</code> (трансляция) и <code>ROT/AROT</code> (поворот).</p>
+              <p>Возможна работа с составными FRAME: <code>FRAME = CTRANS(X, v1, Y, v2)</code></p>
+              <div class="code-block">
+                <div class="code-label">Пример</div>
+                <pre><code>G54              ; активировать нулевое смещение
+TRANS X50 Y30    ; дополнительный сдвиг
+ATRANS X10       ; накопительный сдвиг</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card heidenhain-card" data-brands="heidenhain">
+            <div class="card-header">
+              <span class="brand-badge heidenhain">Heidenhain</span>
+              <h3>Нулевые точки (Preset / REF)</h3>
+            </div>
+            <div class="card-body">
+              <p>Используются <strong>таблицы нулевых точек</strong> (Preset-таблица) или цикл <strong>CYCL DEF 7</strong>. Активация через <code>CYCL DEF 7.0 / 7.1 / 7.2 / 7.3</code>.</p>
+              <p>Каждый параметр цикла задаёт смещение по одной оси.</p>
+              <div class="code-block">
+                <div class="code-label">Пример</div>
+                <pre><code>CYCL DEF 7.0 НУЛЕВАЯ ТОЧКА
+CYCL DEF 7.1 X+50
+CYCL DEF 7.2 Y+30
+CYCL DEF 7.3 Z+0
+; или через таблицу:
+CYCL DEF 7.0
+CYCL DEF 7.1 #5  ; строка 5 таблицы</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== КОРРЕКЦИЯ ИНСТРУМЕНТА ===== -->
+      <section id="tool-correction" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+          Коррекция инструмента
+        </h2>
+
+        <div class="cards-grid">
+          <div class="info-card fanuc-card" data-brands="fanuc">
+            <div class="card-header">
+              <span class="brand-badge fanuc">Fanuc</span>
+              <h3>Таблица офсетов (H/D)</h3>
+            </div>
+            <div class="card-body">
+              <ul class="feature-list">
+                <li><strong>H-офсет</strong> — длина инструмента (G43 H...)</li>
+                <li><strong>D-офсет</strong> — радиус инструмента (G41/G42 D...)</li>
+                <li>Активируется через G43: <code>G43 H1</code></li>
+                <li>Отмена: <code>G49</code></li>
+                <li>Износ хранится отдельно в колонке Wear</li>
+              </ul>
+              <div class="code-block">
+                <div class="code-label">Пример вызова</div>
+                <pre><code>T01 M06          ; сменить на инструмент 1
+G43 H01 Z100.   ; активировать коррекцию длины
+G41 D01 X...    ; коррекция радиуса влево</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card siemens-card" data-brands="siemens">
+            <div class="card-header">
+              <span class="brand-badge siemens">Siemens</span>
+              <h3>Таблица инструментов TO</h3>
+            </div>
+            <div class="card-body">
+              <ul class="feature-list">
+                <li>Коррекция автоматически при вызове <code>T + M6</code></li>
+                <li><strong>D1, D2…</strong> — режущие кромки одного инструмента</li>
+                <li>Длина по Z задаётся как <em>Length1</em> в таблице</li>
+                <li>Радиус — <em>Radius</em> в таблице TO</li>
+                <li>Смена кромки: <code>D2</code> (без смены T)</li>
+              </ul>
+              <div class="code-block">
+                <div class="code-label">Пример вызова</div>
+                <pre><code>T1 D1            ; инструмент 1, кромка 1
+M6               ; смена инструмента
+G41              ; коррекция радиуса влево (из таблицы)</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-card heidenhain-card" data-brands="heidenhain">
+            <div class="card-header">
+              <span class="brand-badge heidenhain">Heidenhain</span>
+              <h3>Таблица инструментов TOOL.T</h3>
+            </div>
+            <div class="card-body">
+              <ul class="feature-list">
+                <li>Все данные — в файле <strong>TOOL.T</strong> (Length, Radius, DL/DR — износ)</li>
+                <li>Вызов: <code>TOOL CALL n Z S5000</code></li>
+                <li>Коррекция радиуса: <code>RL</code> / <code>RR</code> / <code>R0</code> в кадре движения</li>
+                <li>Отдельный файл TOOL_P.T для карманов</li>
+                <li>Ось инструмента задаётся при вызове: X / Y / Z</li>
+              </ul>
+              <div class="code-block">
+                <div class="code-label">Пример вызова</div>
+                <pre><code>TOOL CALL 5 Z S6000  ; инструмент 5, ось Z, 6000 об/мин
+L X+50 Y+30 RL F300  ; движение с коррекцией радиуса влево</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== РАБОТА С НУЛЯМИ ===== -->
+      <section id="zero-points" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Работа с нулями
+        </h2>
+
+        <div class="zero-table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Операция</th>
+                <th class="fanuc-col">Fanuc</th>
+                <th class="siemens-col">Siemens</th>
+                <th class="heidenhain-col">Heidenhain</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Референс при включении</td>
+                <td class="fanuc-col">Пробег по осям (ZRN), или APC без пробега</td>
+                <td class="siemens-col">Референс авто или вручную по кнопке REF</td>
+                <td class="heidenhain-col">Ref-проезд по меткам (EnDat — без проезда)</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Установка нуля детали вручную</td>
+                <td class="fanuc-col">OFFSET/WORK → ввести координату и нажать INPUT</td>
+                <td class="siemens-col">Zero Offset → ввести / или через Measure Workpiece</td>
+                <td class="heidenhain-col">Preset-таблица → ввести значение / Ручной замер</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Запись нуля из программы</td>
+                <td class="fanuc-col"><code>G10 L2 P1 X… Y… Z…</code></td>
+                <td class="siemens-col"><code>$P_UIFR[1,X,TR]=...</code></td>
+                <td class="heidenhain-col"><code>PRESET(X, val, Y, val, Z, val)</code></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Привязка к детали щупом</td>
+                <td class="fanuc-col">Макрос O9001–O9999 (Renishaw) или ручной ввод</td>
+                <td class="siemens-col">CYCLE978 / CYCLE976 или ShopMill</td>
+                <td class="heidenhain-col">CYCL DEF 408–412 или TS-цикл</td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Сброс смещений</td>
+                <td class="fanuc-col"><code>G53</code> — машинная система / <code>G50</code></td>
+                <td class="siemens-col"><code>G500</code> — сброс всех смещений</td>
+                <td class="heidenhain-col"><code>CYCL DEF 7.1 X+0</code> или выход из программы</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ===== ОПАСНЫЕ РАЗЛИЧИЯ ===== -->
+      <section id="dangerous" class="content-section">
+        <h2 class="section-title danger-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          Опасные различия — читать внимательно!
+        </h2>
+
+        <div class="danger-grid">
+          <div class="danger-card">
+            <div class="danger-icon">⚠</div>
+            <div class="danger-content">
+              <h3>Компенсация длины инструмента</h3>
+              <p>На <span class="brand-tag fanuc">Fanuc</span> коррекция длины <strong>не активна</strong> без явного <code>G43 H...</code>. На <span class="brand-tag siemens">Siemens</span> и <span class="brand-tag heidenhain">Heidenhain</span> она применяется автоматически при вызове инструмента. Если перенести программу Fanuc на Siemens без удаления G43 — программа может не запуститься или отработать с ошибкой.</p>
+            </div>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-icon">⚠</div>
+            <div class="danger-content">
+              <h3>Единицы: G20/G21 vs G70/G71</h3>
+              <p><span class="brand-tag fanuc">Fanuc</span>: дюймы = <code>G20</code>, метрика = <code>G21</code>. <span class="brand-tag siemens">Siemens</span>: дюймы = <code>G70</code>, метрика = <code>G71</code>. Если перепутать — инструмент уйдёт в 25 раз дальше или ближе нужной позиции. Катастрофический риск столкновения.</p>
+            </div>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-icon">⚠</div>
+            <div class="danger-content">
+              <h3>Отмена циклов сверления</h3>
+              <p><span class="brand-tag fanuc">Fanuc</span>: цикл продолжает действовать до явного <code>G80</code>. <span class="brand-tag siemens">Siemens</span> и <span class="brand-tag heidenhain">Heidenhain</span>: цикл однократный или требует <code>MCALL</code>. Без G80 на Fanuc любое движение XY может вызвать незапланированное сверление.</p>
+            </div>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-icon">⚠</div>
+            <div class="danger-content">
+              <h3>Вызов подпрограммы (M98/CALL)</h3>
+              <p><span class="brand-tag fanuc">Fanuc</span>: <code>M98 P1001 L3</code> (номер + повтор). <span class="brand-tag siemens">Siemens</span>: <code>SUB1()</code> или <code>CALL "SUB1"</code>. <span class="brand-tag heidenhain">Heidenhain</span>: <code>CALL PGM "путь"</code>. При переносе программы подпрограммы просто не вызовутся без ошибки — опасная ситуация.</p>
+            </div>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-icon">⚠</div>
+            <div class="danger-content">
+              <h3>Направление дуги у Heidenhain</h3>
+              <p><span class="brand-tag heidenhain">Heidenhain</span> использует <code>DR+</code> (против часовой) и <code>DR-</code> (по часовой) — это <strong>обратная логика</strong> по сравнению с G02/G03. При конвертации постпроцессора легко перепутать направление контурной фрезеровки.</p>
+            </div>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-icon">⚠</div>
+            <div class="danger-content">
+              <h3>Смена инструмента: T и M06</h3>
+              <p><span class="brand-tag fanuc">Fanuc</span>: <code>T01 M06</code> — сначала подготовка (T), потом физическая смена (M06). Если написать только T01 без M06 — инструмент <strong>не сменится</strong>. На <span class="brand-tag siemens">Siemens</span> поведение зависит от конфигурации PLC — может сменяться при T или при M6.</p>
+            </div>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-icon">⚠</div>
+            <div class="danger-content">
+              <h3>Конец программы: M30 vs END PGM</h3>
+              <p><span class="brand-tag heidenhain">Heidenhain</span> требует строку <code>END PGM имя MM</code> в конце каждой программы. Без неё программа не верифицируется. <span class="brand-tag fanuc">Fanuc</span>/<span class="brand-tag siemens">Siemens</span>: <code>M30</code> — обязательно для сброса указателя. Без M30 на Fanuc программа может запуститься повторно с середины.</p>
+            </div>
+          </div>
+
+          <div class="danger-card">
+            <div class="danger-icon">⚠</div>
+            <div class="danger-content">
+              <h3>Инкрементальный режим Heidenhain</h3>
+              <p><span class="brand-tag heidenhain">Heidenhain</span>: для инкрементального перемещения используется префикс <code>I</code> перед адресом оси: <code>L IX+10</code>. <span class="brand-tag fanuc">Fanuc</span>/<span class="brand-tag siemens">Siemens</span>: переключение режима через <code>G91</code>. Смешивание логик — частая ошибка при конвертации программ.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ПРИМЕРЫ ПРОГРАММ ===== -->
+      <section id="programs" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Примеры программ
+        </h2>
+
+        <div class="programs-tabs">
+          <div class="tab-bar" role="tablist">
+            <button class="tab-btn active" role="tab" data-tab="prog-drilling" aria-selected="true">Сверление 3 отв.</button>
+            <button class="tab-btn" role="tab" data-tab="prog-pocket" aria-selected="false">Карманная обработка</button>
+            <button class="tab-btn" role="tab" data-tab="prog-threading" aria-selected="false">Нарезка резьбы</button>
+          </div>
+
+          <!-- Сверление -->
+          <div id="prog-drilling" class="tab-panel active">
+            <p class="prog-desc">Сверление трёх отверстий Ø8 мм, глубина 20 мм.</p>
+            <div class="prog-grid">
+              <div class="prog-block" data-brands="fanuc">
+                <div class="prog-header fanuc">
+                  <span>Fanuc</span>
+                  <button class="copy-btn" data-copy="fanuc-drill">Копировать</button>
+                </div>
+                <pre id="fanuc-drill"><code>O0001
+N10 G21 G17 G40 G49 G80
+N20 T01 M06        (СВЕРЛО D8)
+N30 G43 H01 Z100. M03 S2000
+N40 G54
+N50 G99 G81 X20. Y20. Z-22. R5. F120.
+N60 X50. Y20.
+N70 X80. Y20.
+N80 G80
+N90 G49 Z100. M05
+N100 M30</code></pre>
+              </div>
+              <div class="prog-block" data-brands="siemens">
+                <div class="prog-header siemens">
+                  <span>Siemens 840D</span>
+                  <button class="copy-btn" data-copy="siemens-drill">Копировать</button>
+                </div>
+                <pre id="siemens-drill"><code>; СВЕРЛЕНИЕ 3 ОТВ D8
+T1 D1
+M6
+G54 G17
+M3 S2000
+CYCLE81(5, 0, 3, -20) ; уров.безоп, уров.пов, уровень ссылки, глубина
+X20 Y20
+X50 Y20
+X80 Y20
+M5
+G0 Z100
+M30</code></pre>
+              </div>
+              <div class="prog-block" data-brands="heidenhain">
+                <div class="prog-header heidenhain">
+                  <span>Heidenhain TNC</span>
+                  <button class="copy-btn" data-copy="heidenhain-drill">Копировать</button>
+                </div>
+                <pre id="heidenhain-drill"><code>BEGIN PGM DRILL MM
+TOOL CALL 1 Z S2000
+L Z+100 FMAX
+CYCL DEF 200 СВЕРЛЕНИЕ
+  Q200=5    ; безоп.расстояние
+  Q201=-20  ; глубина
+  Q206=120  ; подача на глубину
+  Q202=5    ; врезание
+  Q210=0    ; выдержка вверху
+  Q203=+0   ; поверхность детали
+  Q204=50   ; 2-е безоп.расст.
+  Q211=0    ; выдержка внизу
+L X+20 Y+20 FMAX M3 CYCL CALL
+L X+50 Y+20 FMAX CYCL CALL
+L X+80 Y+20 FMAX CYCL CALL
+L Z+100 FMAX M5
+END PGM DRILL MM</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Карманная обработка -->
+          <div id="prog-pocket" class="tab-panel">
+            <p class="prog-desc">Прямоугольный карман 60×40 мм, глубина 10 мм, фреза Ø12.</p>
+            <div class="prog-grid">
+              <div class="prog-block" data-brands="fanuc">
+                <div class="prog-header fanuc">
+                  <span>Fanuc</span>
+                  <button class="copy-btn" data-copy="fanuc-pocket">Копировать</button>
+                </div>
+                <pre id="fanuc-pocket"><code>O0002
+N10 G21 G17 G40 G49
+N20 T02 M06       (ФРЕЗА D12)
+N30 G43 H02 Z50. M03 S3000
+N40 G54
+; Карман вручную — зигзаг
+N50 G00 X0. Y0.
+N60 G01 Z-10. F50.
+N70 G01 X60. F800.
+N80 Y10.
+N90 X0.
+N100 Y20.
+N110 X60.
+N120 Y30.
+N130 X0.
+N140 Y40.
+N150 X60.
+N160 G00 Z50. M05
+N170 M30</code></pre>
+              </div>
+              <div class="prog-block" data-brands="siemens">
+                <div class="prog-header siemens">
+                  <span>Siemens 840D</span>
+                  <button class="copy-btn" data-copy="siemens-pocket">Копировать</button>
+                </div>
+                <pre id="siemens-pocket"><code>; КАРМАН 60x40 D12
+T2 D1
+M6
+G54 G17
+M3 S3000
+; POCKET3: прям.карман
+POCKET3(10, 0, 2, -10,
+        30, 20,       ; центр XY
+        60, 40,       ; длина, ширина
+        5,            ; радиус угла
+        800, 50,      ; F_горизонт, F_врезание
+        0, 0, 11,     ; режим
+        0, 0, 0, 0)
+M5
+G0 Z100
+M30</code></pre>
+              </div>
+              <div class="prog-block" data-brands="heidenhain">
+                <div class="prog-header heidenhain">
+                  <span>Heidenhain TNC</span>
+                  <button class="copy-btn" data-copy="heidenhain-pocket">Копировать</button>
+                </div>
+                <pre id="heidenhain-pocket"><code>BEGIN PGM POCKET MM
+TOOL CALL 2 Z S3000
+L Z+50 FMAX
+CYCL DEF 251 ПРЯМ.КАРМАН
+  Q215=0    ; вид обработки: полн.
+  Q218=60   ; длина 1-й стороны
+  Q219=40   ; длина 2-й стороны
+  Q220=5    ; радиус угла
+  Q368=0.2  ; припуск сбоку
+  Q224=0    ; угол поворота
+  Q367=0    ; положение кармана
+  Q207=800  ; подача фрезеров.
+  Q351=+1   ; попутное фрезер.
+  Q201=-10  ; глубина
+  Q202=5    ; врезание
+  Q206=50   ; подача врезания
+  Q200=5    ; безоп.расстояние
+  Q203=+0   ; поверхность
+  Q204=50   ; 2-е безоп.расст.
+  Q370=1    ; перекрытие пути
+L X+30 Y+20 FMAX M3 CYCL CALL
+L Z+50 FMAX M5
+END PGM POCKET MM</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Нарезка резьбы -->
+          <div id="prog-threading" class="tab-panel">
+            <p class="prog-desc">Нарезка резьбы M10×1.5, глубина 20 мм — на жёстком метчике.</p>
+            <div class="prog-grid">
+              <div class="prog-block" data-brands="fanuc">
+                <div class="prog-header fanuc">
+                  <span>Fanuc</span>
+                  <button class="copy-btn" data-copy="fanuc-thread">Копировать</button>
+                </div>
+                <pre id="fanuc-thread"><code>O0003
+N10 G21 G17 G40 G49 G80
+N20 T03 M06       (МЕТЧИК M10)
+N30 G43 H03 Z100. M29 S800  ; M29=жёсткий метчик
+N40 G54
+; G84 — цикл нарезки (жёсткий)
+N50 G99 G84 X50. Y50. Z-22.
+        R5. F1200.
+; F = S * шаг = 800 * 1.5 = 1200
+N60 G80
+N70 G49 Z100. M05
+N80 M30</code></pre>
+              </div>
+              <div class="prog-block" data-brands="siemens">
+                <div class="prog-header siemens">
+                  <span>Siemens 840D</span>
+                  <button class="copy-btn" data-copy="siemens-thread">Копировать</button>
+                </div>
+                <pre id="siemens-thread"><code>; НАРЕЗКА РЕЗЬБЫ M10x1.5
+T3 D1
+M6
+G54 G17
+; CYCLE84 — синхронный метчик
+CYCLE84(5, 0, 3, -20, , ,
+        800,    ; обороты
+        800,    ; обороты реверса
+        1.5,    ; шаг резьбы
+        1,      ; направление: правая
+        , 1)    ; жёсткое метчикование
+X50 Y50
+M5
+G0 Z100
+M30</code></pre>
+              </div>
+              <div class="prog-block" data-brands="heidenhain">
+                <div class="prog-header heidenhain">
+                  <span>Heidenhain TNC</span>
+                  <button class="copy-btn" data-copy="heidenhain-thread">Копировать</button>
+                </div>
+                <pre id="heidenhain-thread"><code>BEGIN PGM THREAD MM
+TOOL CALL 3 Z S800
+L Z+100 FMAX
+; CYCL 207 — жёсткий метчик
+CYCL DEF 207 НАРЕЗКА РЕЗЬБЫ
+  Q335=10   ; номин.диаметр
+  Q239=+1.5 ; шаг (+=правая)
+  Q201=-20  ; глубина резьбы
+  Q072=800  ; обороты вывода
+  Q200=5    ; безоп.расстояние
+  Q203=+0   ; поверхность
+  Q204=50   ; 2-е безоп.расст.
+L X+50 Y+50 FMAX M3 CYCL CALL
+L Z+100 FMAX M5
+END PGM THREAD MM</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ЧЕКЛИСТ ЗАПУСКА ===== -->
+      <section id="checklist" class="content-section">
+        <h2 class="section-title checklist-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Что проверить перед первым запуском
+        </h2>
+
+        <div class="checklist-intro">
+          <p>Нажимайте на каждый пункт для отметки. Все галочки должны быть зелёными перед нажатием CYCLE START.</p>
+          <button class="reset-checklist-btn" id="resetChecklist">Сбросить все</button>
+        </div>
+
+        <div class="checklist-grid">
+
+          <div class="checklist-group">
+            <h3 class="checklist-group-title">
+              <span class="group-icon">🔧</span> Инструмент
+            </h3>
+            <ul class="checklist-list" role="list">
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Номер инструмента в программе совпадает с физически установленным</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Длина и радиус инструмента внесены в таблицу (H/D на Fanuc, TOOL.T на Heidenhain)</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span><strong>Fanuc:</strong> G43 H... присутствует перед первым движением по Z</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Инструмент надёжно зажат, вылет соответствует глубине обработки</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Коррекция радиуса (G41/G42 или RL/RR) выключается до конца программы</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="checklist-group">
+            <h3 class="checklist-group-title">
+              <span class="group-icon">📍</span> Нули и координаты
+            </h3>
+            <ul class="checklist-list" role="list">
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Нулевая точка детали привязана верно (G54 или CYCL DEF 7)</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Ось Z: ноль на поверхности детали или на торце — соответствует программе</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Зазор R-плоскости (R5 или Q200) больше зажимных элементов</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Система координат (G17/G18/G19) соответствует ориентации детали</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="checklist-group">
+            <h3 class="checklist-group-title">
+              <span class="group-icon">⚙️</span> Программа
+            </h3>
+            <ul class="checklist-list" role="list">
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Первая строка содержит G40 G49 G80 (Fanuc) или сброс смещений</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Единицы измерения (G20/G21 или G70/G71) соответствуют программе</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Программа прошла графическое моделирование (sim / проверка траектории)</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Программа заканчивается M30 (Fanuc/Siemens) или END PGM (Heidenhain)</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Подпрограммы присутствуют и вызываются правильным синтаксисом</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="checklist-group">
+            <h3 class="checklist-group-title">
+              <span class="group-icon">🏭</span> Станок и деталь
+            </h3>
+            <ul class="checklist-list" role="list">
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Деталь надёжно зажата, усилие зажима не деформирует заготовку</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Зона обработки свободна — нет прихватов, болтов, измерительных щупов</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Первый запуск — подача Override на 5–10%, скорость Override снижена</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>Рука у кнопки Feed Hold / аварийного стопа при первом прогоне</span>
+              </li>
+              <li class="check-item" role="checkbox" tabindex="0" aria-checked="false">
+                <span class="check-box"></span>
+                <span>СОЖ включена (если требуется), давление в норме</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="checklist-progress" id="checklistProgress">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          </div>
+          <span id="progressLabel">0 / 18 выполнено</span>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p class="footer-text">CNC Шпаргалка — Fanuc · Siemens · Heidenhain</p>
+      <a href="https://www.perplexity.ai/computer" target="_blank" rel="noopener noreferrer" class="footer-link">
+        Created with Perplexity Computer
+      </a>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js');
+    }
+  </script>
+</body>
+</html>
