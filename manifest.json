@@ -1,6 +1,6 @@
 {
-  "name": "CNC Шпаргалка",
-  "short_name": "CNC",
+  "name": "ЧПУ Шпаргалка",
+  "short_name": "ЧПУ",
   "description": "Fanuc / Siemens / Heidenhain — циклы, коды, смещения, чеклист",
   "start_url": "./index.html",
   "display": "standalone",
@@ -21,6 +21,9 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["productivity", "utilities"],
+  "categories": [
+    "productivity",
+    "utilities"
+  ],
   "lang": "ru"
 }

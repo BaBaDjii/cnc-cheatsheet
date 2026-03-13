@@ -787,7 +787,6 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
   color: var(--color-text);
 }
 
-
 .checklist-list {
   padding: var(--space-3) var(--space-4);
   display: flex;
@@ -1010,7 +1009,6 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
 .info-box p  { margin: 0; font-size: .875rem; color: var(--text-secondary,#9ca3af); line-height: 1.55; }
 .info-box strong { color: var(--text-primary,#f0ede6); }
 
-
 /* ── Generator layout ────────────────────────────────────────── */
 .generator-layout {
   display: grid;
@@ -1121,7 +1119,6 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
 #gs-heidenhain:checked + .gen-sys-btn .gs-dot  { background: #2db37a; box-shadow: 0 0 6px rgba(45,179,122,.6); }
 #gs-heidenhain:checked + .gen-sys-btn .gs-name { color: #2db37a; }
 
-
 .gen-select, .gen-input {
   width: 100%;
   padding: 8px 12px;
@@ -1169,7 +1166,6 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
   color: #c8c6c0;
   min-height: 200px;
 }
-
 
 /* ── Checklist v2: phases + grab badges ──────────────────────── */
 .checklist-phase {
@@ -1239,7 +1235,6 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
   flex-shrink: 0;
 }
 
-
 /* Phase accent left border */
 .phase-1 { background: rgba(59, 143, 232, .04); }
 .phase-2 { background: rgba(45, 179, 122, .04); }
@@ -1266,7 +1261,6 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
   vertical-align: middle;
   margin-right: 5px;
 }
-
 
 /* ===== MOBILE NAV DRAWER ===== */
 
@@ -1403,9 +1397,6 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
 .mob-generator:hover, .mob-generator:active { background: rgba(240,192,64,.08) !important; }
 
 /* Показываем бургер на мобильных */
-@media (max-width: 900px) {
-  .mob-menu-btn { display: flex; }
-}
 
 /* ===== MODE SWITCHER ===== */
 .mode-switcher {
@@ -1437,10 +1428,6 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
 .mode-btn[data-mode="beginner"].active { color: #2db37a; }
 .mode-btn[data-mode="advanced"].active { color: #3b8fe8; }
 
-@media (max-width: 500px) {
-  .mode-btn { padding: 5px 10px; font-size: .73rem; }
-}
-
 /* ===== BEGINNER SECTION STYLES ===== */
 
 .section-intro {
@@ -1451,7 +1438,7 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
 }
 
 /* Таблица базовых кодов */
-.beg-table-wrap { overflow-x: auto; margin-bottom: 1.5rem; }
+
 .beg-table {
   width: 100%;
   border-collapse: collapse;
@@ -1912,8 +1899,6 @@ kbd {
   .tips-grid { grid-template-columns: 1fr; }
 }
 
-
-
 /* ===== MOBILE HEADER: two-row grid layout ===== */
 @media (max-width: 600px) {
   .site-header { height: auto; }
@@ -1953,9 +1938,6 @@ kbd {
     font-size: .74rem;
   }
 
-  /* remove kbd shortcut in search on mobile */
-  .header-search kbd { display: none; }
-  .brand-filters { display: none; }
 }
 
 /* ===== DIFF-TABLE: base styles + mobile card layout ===== */

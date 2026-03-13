@@ -1,4 +1,4 @@
-const CACHE = 'cnc-v7';
+const CACHE = 'cnc-v8';
 const ASSETS = [
   './',
   './index.html',
