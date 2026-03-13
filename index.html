@@ -1545,7 +1545,7 @@ M3 M8</code></pre>
       <section id="b-zero" class="content-section" data-mode="beginner">
         <h2 class="section-title">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Привязка нуля детали — пошагово
+          Привязка нуля детали вручную (без циклов привязки)
         </h2>
         <p class="section-intro">Самая частая операция перед запуском. Нулевая точка говорит станку: «вот откуда считать X=0, Y=0, Z=0».</p>
 
@@ -1558,7 +1558,7 @@ M3 M8</code></pre>
             <div class="tc-body">
               <ol class="tc-steps">
                 <li><span class="tc-num">1</span><div>Касаемся датчиком/инструментом точки X=0 на детали</div></li>
-                <li><span class="tc-num">2</span><div><strong>OFS/SET → Работа → G54</strong><br>Вводим текущую координату X станка, нажимаем <kbd>MEASURE</kbd> или вводим вручную</div></li>
+                <li><span class="tc-num">2</span><div><strong>OFS/SET → Измерение → G54</strong><br>Вводим текущую координату X станка, нажимаем <kbd>MEASURE</kbd> или вводим вручную</div></li>
                 <li><span class="tc-num">3</span><div>Повторяем для Y, потом Z (обычно верх детали)</div></li>
                 <li><span class="tc-num">4</span><div>В программе вызываем: <code>G54 G90</code></div></li>
               </ol>
