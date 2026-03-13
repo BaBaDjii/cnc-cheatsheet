@@ -118,6 +118,15 @@
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
           Примеры программ
         </a></li>
+        <li><a href="#five-axis" class="nav-link">
+          <span class="nav-icon">✦</span>5-осевые
+        </a></li>
+        <li><a href="#probes" class="nav-link">
+          <span class="nav-icon">⊙</span>Калибровка щупов
+        </a></li>
+        <li><a href="#generator" class="nav-link generator-link">
+          <span class="nav-icon">⚡</span>Генератор программ
+        </a></li>
         <li><a href="#checklist" class="nav-link checklist-link">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
           Чеклист запуска
@@ -1146,6 +1155,429 @@ END PGM THREAD MM</code></pre>
             <div class="progress-fill" id="progressFill" style="width: 0%"></div>
           </div>
           <span id="progressLabel">0 / 18 выполнено</span>
+        </div>
+      </section>
+
+      <!-- ===== 5-ОСЕВЫЕ ОПЕРАЦИИ ===== -->
+      <section id="five-axis" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+          5-осевые операции
+        </h2>
+
+        <div class="table-wrapper">
+          <table class="comparison-table">
+            <thead>
+              <tr>
+                <th>Функция</th>
+                <th class="fanuc-col">Fanuc</th>
+                <th class="siemens-col">Siemens 840D</th>
+                <th class="heidenhain-col">Heidenhain TNC640</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Наклон рабочей плоскости (TWP)</td>
+                <td class="fanuc-col"><code>G68.2</code> P0=Эйлер / P1=RPY / P2=3 точки</td>
+                <td class="siemens-col"><code>CYCLE800</code></td>
+                <td class="heidenhain-col"><code>PLANE SPATIAL</code> / <code>EULER</code> / <code>VECTOR</code> / <code>AXIAL</code></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Ориентация шпинделя ⊥ плоскости</td>
+                <td class="fanuc-col"><code>G53.1</code> (без TCP) / <code>G53.6</code> (с TCP)</td>
+                <td class="siemens-col">Авто через <code>CYCLE800</code></td>
+                <td class="heidenhain-col"><code>TURN</code> / <code>MOVE</code> / <code>STAY</code> — опция при <code>PLANE</code></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Управление центром инструмента (RTCP/TCP/TCPM)</td>
+                <td class="fanuc-col"><code>G43.4</code> тип 1 / <code>G43.5</code> тип 2 (с векторами)</td>
+                <td class="siemens-col"><code>TRAORI</code></td>
+                <td class="heidenhain-col"><code>M128</code> / <code>FUNCTION TCPM</code></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Отмена наклона плоскости</td>
+                <td class="fanuc-col"><code>G69</code></td>
+                <td class="siemens-col"><code>CYCLE800</code> с нулевыми углами</td>
+                <td class="heidenhain-col"><code>PLANE RESET</code></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Отмена RTCP / TCPM</td>
+                <td class="fanuc-col"><code>G49 H0</code></td>
+                <td class="siemens-col"><code>TRAFOOF</code></td>
+                <td class="heidenhain-col"><code>M129</code> / <code>FUNCTION TCPM OFF</code></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Инкрементальный / аддитивный поворот</td>
+                <td class="fanuc-col"><code>G68.4</code></td>
+                <td class="siemens-col"><code>CYCLE800</code> _ST=1</td>
+                <td class="heidenhain-col">Новый вызов <code>PLANE</code></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Выбор решения (2 варианта ориентации)</td>
+                <td class="fanuc-col">Параметр <code>Q</code> в G68.2</td>
+                <td class="siemens-col"><code>_DIR: +1 / -1</code></td>
+                <td class="heidenhain-col"><code>SYM+</code> / <code>SYM-</code></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Сглаживание ориентации при 5D</td>
+                <td class="fanuc-col">Параметры угловой скорости</td>
+                <td class="siemens-col"><code>ORISON</code> / <code>ORISONX</code></td>
+                <td class="heidenhain-col"><code>CYCL DEF 32 TOLERANCE</code></td>
+              </tr>
+              <tr data-brands="fanuc siemens heidenhain">
+                <td>Типовая структура программы (3+2)</td>
+                <td class="fanuc-col"><code>G68.2 → G53.1 → G43.4 → обработка → G49 → G69</code></td>
+                <td class="siemens-col"><code>CYCLE800 → обработка → CYCLE800(сброс)</code></td>
+                <td class="heidenhain-col"><code>PLANE ... MOVE → M128 → обработка → M129 → PLANE RESET</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Примеры программ 5D -->
+        <div class="programs-tabs">
+          <div class="tab-bar" role="tablist">
+            <button class="tab-btn active" role="tab" data-tab="ax5-fanuc" aria-selected="true">Fanuc G68.2</button>
+            <button class="tab-btn" role="tab" data-tab="ax5-siemens" aria-selected="false">Siemens CYCLE800</button>
+            <button class="tab-btn" role="tab" data-tab="ax5-heidenhain" aria-selected="false">Heidenhain PLANE</button>
+          </div>
+          <div id="ax5-fanuc" class="tab-panel active">
+            <p class="prog-desc">Наклон рабочей плоскости на 30° вокруг Y (Roll-Pitch-Yaw), сверление отверстия в наклонной плоскости с активным TCPC.</p>
+            <div class="prog-block" style="max-width:720px">
+              <div class="prog-header fanuc">
+                <span>Fanuc — G68.2 + G43.4</span>
+                <button class="copy-btn" data-copy="code-ax5-fanuc">Копировать</button>
+              </div>
+              <pre id="code-ax5-fanuc"><code>O0010 (5-AXIS TWP 30DEG ABOUT Y + TCPC)
+N10 G90 G54 G17 G40 G49 G80
+N20 T01 M06             (СВЕРЛО D10)
+N30 G00 X0 Y0
+N40 G43 H01 Z100. M03 S2500
+
+(--- НАКЛОН ПЛОСКОСТИ 30° ВОКРУГ Y ---)
+N50 G68.2 P1 Q123       (МЕТОД RPY, ПОРЯДОК X-Y-Z)
+         X0 Y0 Z0       (НАЧАЛО СК = G54)
+         I0 J30.0 K0    (КРЕН=0, ТАНГАЖ=30°, РЫСКАНИЕ=0)
+N60 G53.1               (ШПИНДЕЛЬ ⊥ ПЛОСКОСТИ)
+
+(--- АКТИВАЦИЯ TCPC ---)
+N70 G43.4 H01           (TCPC: TCP ПОД КОНТРОЛЕМ)
+N80 G00 X0 Y0 Z5.
+
+(--- СВЕРЛЕНИЕ В НАКЛОННОЙ ПЛОСКОСТИ ---)
+N90 G81 X0 Y0 Z-15. R3. F150.
+N100 X30. Y20.
+N110 G80
+
+(--- СБРОС ---)
+N120 G00 Z100.
+N130 G49              (ОТМЕНА TCPC)
+N140 G69              (ОТМЕНА TWP)
+N150 M30</code></pre>
+            </div>
+          </div>
+          <div id="ax5-siemens" class="tab-panel">
+            <p class="prog-desc">CYCLE800: поворот плоскости на 45° вокруг оси X, торцевое фрезерование в повёрнутой плоскости.</p>
+            <div class="prog-block" style="max-width:720px">
+              <div class="prog-header siemens">
+                <span>Siemens 840D — CYCLE800 + TRAORI</span>
+                <button class="copy-btn" data-copy="code-ax5-siemens">Копировать</button>
+              </div>
+              <pre id="code-ax5-siemens"><code>; 5-AXIS CYCLE800 45DEG ABOUT X
+N10 G54 G90 G17 G40
+N20 T=MILL_10MM D1
+N30 M6
+N40 M3 S5000
+
+; --- ПОВОРОТ ПЛОСКОСТИ НА 45° ВОКРУГ X ---
+; CYCLE800(FR, TC, ST, MODE, XO, YO, ZO, A, B, C, X1, Y1, Z1, DIR)
+N50 CYCLE800(1,"HEAD1",0,57,
+             0,0,40,        ; начало повёрнутой СК: ZO=40
+             45,0,0,        ; A=45° (поворот вокруг X)
+             0,0,0,-1)      ; DIR=-1
+
+; --- ОБРАБОТКА В ПОВЁРНУТОЙ ПЛОСКОСТИ ---
+N60 G0 X0 Y0 Z5.
+N70 CYCLE71(50,2,2,
+            0,0,0,
+            80,60,0,4,
+            10,5,0,500,0,11,0,0)
+
+; --- СБРОС ПОВОРОТА ---
+N80 CYCLE800(1,"HEAD1",0,57,
+             0,0,0,
+             0,0,0,         ; нулевые углы = сброс
+             0,0,0,1)
+N90 M5
+N100 G0 Z200
+N110 M30</code></pre>
+            </div>
+          </div>
+          <div id="ax5-heidenhain" class="tab-panel">
+            <p class="prog-desc">PLANE SPATIAL SPB+30: наклон 30° вокруг Y, активация TCPM (M128), фрезерование в наклонной плоскости.</p>
+            <div class="prog-block" style="max-width:720px">
+              <div class="prog-header heidenhain">
+                <span>Heidenhain TNC640 — PLANE SPATIAL + M128</span>
+                <button class="copy-btn" data-copy="code-ax5-heid">Копировать</button>
+              </div>
+              <pre id="code-ax5-heid"><code>BEGIN PGM TILT5AX MM
+TOOL CALL 1 Z S4500
+L Z+200 R0 FMAX M3
+
+; --- НАКЛОН ПЛОСКОСТИ 30° ВОКРУГ Y ---
+; SPA=вокруг X, SPB=вокруг Y, SPC=вокруг Z
+PLANE SPATIAL SPA+0 SPB+30 SPC+0 MOVE FMAX SYM- TURN F3000
+; MOVE  — перемещение с сохранением позиции TCP
+; SYM-  — выбор «короткого» решения поворота
+; TURN  — шпиндель разворачивается перп. плоскости
+
+; --- АКТИВАЦИЯ TCPM ---
+M128 F3000          ; TCPM вкл, макс. подача компенсации 3000
+
+; --- ОБРАБОТКА В НАКЛОННОЙ ПЛОСКОСТИ ---
+L X+0 Y+0 R0 FMAX
+L Z+5 R0 FMAX
+CYCL DEF 200 СВЕРЛЕНИЕ
+  Q200=+2    ; безоп. расстояние
+  Q201=-15   ; глубина
+  Q206=+150  ; подача врезания
+  Q202=+5    ; шаг врезания
+  Q210=+0    ; выдержка вверху
+  Q203=+0    ; поверхность
+  Q204=+50   ; 2-е безоп.расст.
+  Q211=+0    ; выдержка внизу
+L X+0 Y+0 FMAX M3 CYCL CALL
+L X+30 Y+20 FMAX CYCL CALL
+
+; --- СБРОС ---
+L Z+200 R0 FMAX
+M129                ; TCPM выкл
+PLANE RESET MOVE FMAX   ; сброс наклона
+END PGM TILT5AX MM</code></pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <div class="info-box-icon">💡</div>
+          <div>
+            <strong>Важно: TCPM/RTCP требует лицензии!</strong> На Heidenhain — опция 8 (TCPM), на Siemens — опция TRAORI, на Fanuc — опция 5-Axis Machining. Без лицензии команды активируются, но компенсация не работает — инструмент уйдёт в неверную точку.
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== КАЛИБРОВКА ЩУПОВ ===== -->
+      <section id="probes" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+          Калибровка щупов и грибков
+        </h2>
+
+        <div class="cards-grid">
+          <!-- FANUC -->
+          <div class="info-card fanuc-card" data-brands="fanuc">
+            <div class="card-header">
+              <span class="brand-badge fanuc">Fanuc</span>
+              <h3>Щуп детали — макросы Renishaw</h3>
+            </div>
+            <div class="card-body">
+              <p>Калибровка через макро-программы O9801/O9802. Данные хранятся в переменных <strong>#500–#519</strong>.</p>
+              <ul class="feature-list">
+                <li><strong>#500–#503</strong> — отступы X+/X−/Y+/Y−</li>
+                <li><strong>#511</strong> — электронная длина щупа</li>
+                <li><strong>#528–#529</strong> — позиция грибка TT (X, Y)</li>
+                <li><strong>#530</strong> — диаметр диска грибка</li>
+              </ul>
+              <div class="code-block">
+                <div class="code-label">Калибровка щупа детали (O8000)</div>
+                <pre><code>O8000 (КАЛИБРОВКА ЩУПА ДЕТАЛИ)
+T31 M06          ; щуп в шпиндель
+G43 H31 Z100.
+G54
+; Позиция над калибровочным кольцом
+G00 X0 Y0
+G01 Z5. F1000.
+; Вызов макроса Renishaw
+M98 P9801        ; калибровка X+/X−/Y+/Y−
+M98 P9802        ; калибровка Z (длина)
+G00 Z100. M05
+M30</code></pre>
+              </div>
+              <div class="code-block">
+                <div class="code-label">Калибровка грибка TT (O8500)</div>
+                <pre><code>O8500 (КАЛИБРОВКА ГРИБКА TT)
+; Привести шпиндель над грибком
+G53 G00 X#528 Y#529  ; позиция из переменных
+M98 P9701            ; калибровка TT
+; #523 = обновлённое расстояние до TT
+M30</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- SIEMENS -->
+          <div class="info-card siemens-card" data-brands="siemens">
+            <div class="card-header">
+              <span class="brand-badge siemens">Siemens</span>
+              <h3>CYCLE976 / CYCLE971</h3>
+            </div>
+            <div class="card-body">
+              <p>Щуп детали — <strong>CYCLE976</strong>, грибок TT — <strong>CYCLE971</strong> (режим калибровки). Данные в массивах <code>_WP[]</code> и <code>_TP[]</code>.</p>
+              <ul class="feature-list">
+                <li><strong>CYCLE976 _MVAR=1</strong> — калибровка в отверстии (известный центр)</li>
+                <li><strong>CYCLE976 _MVAR=10008</strong> — калибровка с поиском центра</li>
+                <li><strong>CYCLE971</strong> — измерение длины и радиуса инструмента через TT</li>
+              </ul>
+              <div class="code-block">
+                <div class="code-label">Калибровка щупа детали</div>
+                <pre><code>; КАЛИБРОВКА ЩУПА — CYCLE976
+T9 D1            ; щуп тип 710
+M6
+G54 G90 G17
+G0 X100 Y50 Z10  ; над кольцом Ø50
+CYCLE976(
+  _MVAR=1,       ; в отверстии, известный центр
+  _SETVAL=50,    ; диаметр кольца [мм]
+  _MA=1,         ; ось: абсцисса
+  _PRNUM=1,      ; номер щупа
+  _FA=3,         ; путь измерения
+  _VMS=0,        ; скорость (авто)
+  _TZL=0.005,    ; допуск нуля
+  _TSA=0.1)      ; допуск отклонения
+M30</code></pre>
+              </div>
+              <div class="code-block">
+                <div class="code-label">Измерение инструмента через TT</div>
+                <pre><code>; ИЗМЕРЕНИЕ ДЛИНЫ ЧЕРЕЗ ГРИБОК
+T5 D1
+M6 M3 S500
+CYCLE971(
+  _MVAR=1,       ; измерить длину
+  _KNUM=5,       ; номер инструмента
+  _SCHNR=1,      ; номер кромки D
+  _FA=3,
+  _NMSP=1)       ; число измерений
+M30</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- HEIDENHAIN -->
+          <div class="info-card heidenhain-card" data-brands="heidenhain">
+            <div class="card-header">
+              <span class="brand-badge heidenhain">Heidenhain</span>
+              <h3>CYCL 460–462 (TS) / 480–484 (TT)</h3>
+            </div>
+            <div class="card-body">
+              <p>Щуп детали TS — циклы <strong>460–462</strong>. Грибок TT — циклы <strong>480–484</strong>. Данные пишутся в <strong>TOOL.T</strong>.</p>
+              <ul class="feature-list">
+                <li><strong>CYCL 460</strong> — полная калибровка TS по шару (длина + радиус + биение)</li>
+                <li><strong>CYCL 461</strong> — только длина щупа TS</li>
+                <li><strong>CYCL 462</strong> — только радиус шарика TS</li>
+                <li><strong>CYCL 480</strong> — базовая калибровка TT (длина)</li>
+                <li><strong>CYCL 483</strong> — калибровка TT с радиусом инструмента</li>
+              </ul>
+              <div class="code-block">
+                <div class="code-label">Калибровка TS по шару (CYCL 460)</div>
+                <pre><code>; Позиционировать щуп над центром шара
+TOOL CALL 99 Z S0  ; вызов щупа TS
+L Z+50 FMAX
+CYCL DEF 460 CALIBRATE TS
+  Q407=+12.5   ; радиус калибр.шара [мм]
+  Q320=+2.0    ; зазор безопасности
+  Q301=+1      ; отвод: от FMAX
+  Q423=+4      ; точек измерения: 4
+  Q380=+0      ; опорный угол: 0°
+CYCL CALL      ; выполнить</code></pre>
+              </div>
+              <div class="code-block">
+                <div class="code-label">Измерение длины инструмента (CYCL 481)</div>
+                <pre><code>; Измерение длины через грибок TT
+TOOL CALL 5 Z S500
+CYCL DEF 481 ИЗМЕРЕНИЕ ДЛИНЫ
+  Q380=+0      ; угол шпинделя
+  Q260=+80     ; безопасная высота
+  Q341=+1      ; 1=измерить с вращением
+CYCL CALL M3</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Последовательность калибровки -->
+        <div class="procedure-block">
+          <h3 class="procedure-title">Типовая последовательность калибровки перед сменой щупа</h3>
+          <ol class="procedure-list">
+            <li><span class="step-num">1</span><span>Установить щуп в шпиндель, убедиться в надёжности крепления</span></li>
+            <li><span class="step-num">2</span><span>Задать предварительную длину щупа в таблице инструментов (примерное значение ±5 мм)</span></li>
+            <li><span class="step-num">3</span><span>Подвести щуп над калибровочным кольцом / шаром на безопасной высоте вручную</span></li>
+            <li><span class="step-num">4</span><span>Запустить цикл калибровки — стойка определит точную длину и радиус</span></li>
+            <li><span class="step-num">5</span><span>Проверить результат: радиус шарика ≈ паспортному значению (обычно 1.0–3.0 мм)</span></li>
+            <li><span class="step-num">6</span><span>Для грибка TT: позиционировать калибровочный инструмент (эталон), запустить цикл TT</span></li>
+            <li><span class="step-num">7</span><span>Все последующие измерения инструментов выполнять только после калибровки TT</span></li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ===== ГЕНЕРАТОР ПРОГРАММ ===== -->
+      <section id="generator" class="content-section">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M9 8l2 2-2 2M13 12h2"/></svg>
+          Генератор программ
+        </h2>
+        <p style="color:var(--color-text-muted);font-size:var(--text-sm);margin-bottom:var(--space-6)">Заполни параметры — получи готовый блок кода для вставки в программу.</p>
+
+        <div class="generator-layout">
+          <!-- Левая панель: форма -->
+          <div class="gen-form-panel">
+
+            <div class="gen-group">
+              <label class="gen-label">Система ЧПУ</label>
+              <div class="gen-radio-group" id="genSystem">
+                <label class="gen-radio active"><input type="radio" name="genSys" value="fanuc" checked> <span>Fanuc</span></label>
+                <label class="gen-radio"><input type="radio" name="genSys" value="siemens"> <span>Siemens</span></label>
+                <label class="gen-radio"><input type="radio" name="genSys" value="heidenhain"> <span>Heidenhain</span></label>
+              </div>
+            </div>
+
+            <div class="gen-group">
+              <label class="gen-label">Операция</label>
+              <select class="gen-select" id="genOperation">
+                <option value="">—— выберите операцию ——</option>
+                <optgroup label="Сверление">
+                  <option value="drill_simple">Сверление простое</option>
+                  <option value="drill_deep">Глубокое сверление (ступенчатое)</option>
+                  <option value="drill_dwell">Сверление с выдержкой</option>
+                </optgroup>
+                <optgroup label="Резьба">
+                  <option value="tap">Нарезка резьбы (метчик)</option>
+                </optgroup>
+                <optgroup label="Фрезерование">
+                  <option value="pocket_rect">Прямоугольный карман</option>
+                  <option value="pocket_circ">Круговой карман / отверстие</option>
+                  <option value="face_mill">Торцевое фрезерование</option>
+                </optgroup>
+                <optgroup label="Измерение">
+                  <option value="probe_corner">Щуп: угол детали (X/Y ноль)</option>
+                  <option value="probe_bore">Щуп: центр отверстия</option>
+                </optgroup>
+              </select>
+            </div>
+
+            <div class="gen-fields" id="genFields"><!-- dynamic --></div>
+
+            <button class="gen-btn" id="genBtn">Сгенерировать код</button>
+          </div>
+
+          <!-- Правая панель: результат -->
+          <div class="gen-result-panel">
+            <div class="gen-result-header">
+              <span id="genResultLabel">Результат появится здесь</span>
+              <button class="copy-btn" id="genCopyBtn" style="display:none" data-copy="genOutput">Копировать</button>
+            </div>
+            <pre id="genOutput" class="gen-output"><code id="genOutputCode">; Заполни параметры слева
+; и нажми «Сгенерировать код»</code></pre>
+          </div>
         </div>
       </section>
 

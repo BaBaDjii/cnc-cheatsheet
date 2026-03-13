@@ -356,7 +356,7 @@ ul[role="list"] { list-style: none; }
   max-width: 1600px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 250px 1fr;
+  grid-template-columns: 268px 1fr;
   min-height: calc(100dvh - 3.75rem - 3rem);
   gap: 0;
 }
@@ -1076,3 +1076,186 @@ th.heidenhain-col{ background: rgba(45, 179, 122, 0.15); color: var(--heidenhain
   0%   { background: rgba(79, 152, 163, 0.08); }
   100% { background: transparent; }
 }
+
+/* ── Nav extras ─────────────────────────────────────────────── */
+.nav-icon { margin-right: 6px; font-style: normal; }
+.generator-link { color: #f0c040; }
+.generator-link:hover,
+.generator-link.active { color: #f0c040; background: rgba(240,192,64,.12); }
+
+/* ── Info-box (5-axis TCPM warning) ─────────────────────────── */
+.info-box {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: rgba(59,143,232,.10);
+  border: 1px solid rgba(59,143,232,.35);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 16px 0;
+}
+.info-box-icon { font-size: 1.4rem; flex-shrink: 0; line-height: 1; }
+.info-box p  { margin: 0; font-size: .875rem; color: var(--text-secondary,#9ca3af); line-height: 1.55; }
+.info-box strong { color: var(--text-primary,#f0ede6); }
+[data-theme="light"] .info-box { background: rgba(59,143,232,.07); }
+
+/* ── Procedure block (probe calibration) ────────────────────── */
+.procedure-block {
+  background: var(--surface-2, #1e1d1b);
+  border: 1px solid var(--border, #2e2c28);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-top: 12px;
+}
+[data-theme="light"] .procedure-block {
+  background: #f8f7f5;
+  border-color: #ddd;
+}
+.procedure-title {
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin: 0 0 12px;
+  color: var(--accent-fanuc, #3b8fe8);
+}
+.procedure-title.siemens { color: var(--accent-siemens, #f08c00); }
+.procedure-title.heidenhain { color: var(--accent-heidenhain, #2db37a); }
+.procedure-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+.procedure-list li { display: flex; align-items: baseline; gap: 10px; font-size: .875rem; line-height: 1.5; }
+.step-num {
+  flex-shrink: 0;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--accent-fanuc, #3b8fe8);
+  color: #fff;
+  font-size: .72rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.procedure-title.siemens ~ .procedure-list .step-num { background: var(--accent-siemens, #f08c00); }
+.procedure-title.heidenhain ~ .procedure-list .step-num { background: var(--accent-heidenhain, #2db37a); }
+
+/* ── Generator layout ────────────────────────────────────────── */
+.generator-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .generator-layout { grid-template-columns: 1fr; }
+}
+
+.gen-form-panel {
+  background: var(--surface-2, #1e1d1b);
+  border: 1px solid var(--border, #2e2c28);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex; flex-direction: column; gap: 16px;
+}
+[data-theme="light"] .gen-form-panel {
+  background: #f8f7f5; border-color: #ddd;
+}
+
+.gen-result-panel {
+  background: var(--surface-2, #1e1d1b);
+  border: 1px solid var(--border, #2e2c28);
+  border-radius: 12px;
+  padding: 20px;
+  min-height: 300px;
+}
+[data-theme="light"] .gen-result-panel {
+  background: #f8f7f5; border-color: #ddd;
+}
+
+.gen-result-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.gen-result-header h3 { margin: 0; font-size: 1rem; }
+
+.gen-group { display: flex; flex-direction: column; gap: 6px; }
+.gen-label {
+  font-size: .8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-secondary, #9ca3af);
+}
+
+.gen-radio-group { display: flex; gap: 8px; flex-wrap: wrap; }
+.gen-radio input[type="radio"] { display: none; }
+.gen-radio label {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border, #2e2c28);
+  font-size: .82rem; font-weight: 600; cursor: pointer;
+  transition: all .15s;
+  color: var(--text-secondary, #9ca3af);
+}
+.gen-radio label:hover { border-color: #888; color: var(--text-primary, #f0ede6); }
+.gen-radio input[value="fanuc"]:checked + label  { border-color: #3b8fe8; color: #3b8fe8; background: rgba(59,143,232,.12); }
+.gen-radio input[value="siemens"]:checked + label { border-color: #f08c00; color: #f08c00; background: rgba(240,140,0,.12); }
+.gen-radio input[value="heidenhain"]:checked + label { border-color: #2db37a; color: #2db37a; background: rgba(45,179,122,.12); }
+
+.gen-select, .gen-input {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border, #2e2c28);
+  background: var(--surface-1, #141312);
+  color: var(--text-primary, #f0ede6);
+  font-size: .875rem;
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color .15s;
+}
+.gen-select:focus, .gen-input:focus {
+  outline: none; border-color: #3b8fe8;
+}
+[data-theme="light"] .gen-select,
+[data-theme="light"] .gen-input {
+  background: #fff; border-color: #ccc; color: #1a1916;
+}
+
+.gen-dynamic-fields,
+.gen-fields { display: flex; flex-direction: column; gap: 12px; }
+
+.gen-btn {
+  padding: 11px;
+  border-radius: 10px;
+  border: none;
+  background: linear-gradient(135deg, #3b8fe8 0%, #2db37a 100%);
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  cursor: pointer;
+  transition: opacity .15s, transform .1s;
+}
+.gen-btn:hover  { opacity: .88; transform: translateY(-1px); }
+.gen-btn:active { transform: translateY(0); opacity: 1; }
+
+.gen-output {
+  background: var(--code-bg, #0f0e0c);
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .8rem;
+  line-height: 1.65;
+  white-space: pre;
+  overflow-x: auto;
+  color: #c8c6c0;
+  min-height: 200px;
+}
+
+.gen-placeholder {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  height: 220px;
+  color: var(--text-secondary, #9ca3af);
+  font-size: .9rem; gap: 10px;
+}
+.gen-placeholder-icon { font-size: 2.5rem; opacity: .5; }
